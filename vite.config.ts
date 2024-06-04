@@ -22,6 +22,11 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    rollupOptions: {
+      external: ['tslib']
+    }
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -30,4 +35,9 @@ export default defineConfig({
   test: {
     root: path.resolve(__dirname, './src'),
   },
+  optimizeDeps: {
+    include: [
+      '@pagopa/mui-italia'
+    ]
+  }
 });
