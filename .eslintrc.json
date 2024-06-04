@@ -6,10 +6,15 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:storybook/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["react", "react-hooks", "@typescript-eslint"],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "@typescript-eslint"
+  ],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -24,7 +29,9 @@
     "no-restricted-imports": [
       "error",
       {
-        "patterns": ["@mui/*/*/*"]
+        "patterns": [
+          "@mui/*/*/*"
+        ]
       }
     ]
   }
