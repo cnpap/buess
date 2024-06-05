@@ -37,7 +37,9 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: [
-      '@pagopa/mui-italia'
+      '@pagopa/mui-italia',
+      '@storybook/blocks',
+      '@mdx-js/react'
     ]
   }
 });
