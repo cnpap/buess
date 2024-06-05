@@ -1,5 +1,7 @@
 import type { Preview } from '@storybook/react';
 import '../src/globals.css'
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
 const preview: Preview = {
   parameters: {
@@ -10,6 +12,17 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [
+    (Story, c) => {
+      return (
+        <BrowserRouter>
+          <Story />
+        </BrowserRouter>
+      )
+    }
+  ]
+
 };
 
+// noinspection JSUnusedGlobalSymbols
 export default preview;
