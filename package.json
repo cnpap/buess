@@ -37,6 +37,7 @@
     "@mui/system": "^5.15.0",
     "@mui/utils": "^5.15.0",
     "@pagopa/mui-italia": "^1.4.1",
+    "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
