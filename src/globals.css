@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'NotoSansSC';
+  src: url('/NotoSansSC-Medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body * {
+  font-family: 'NotoSansSC', sans-serif !important;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
