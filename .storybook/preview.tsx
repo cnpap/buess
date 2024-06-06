@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/react';
-import '../src/globals.css'
+import '../src/globals.css';
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 
 const preview: Preview = {
   parameters: {
@@ -14,13 +14,14 @@ const preview: Preview = {
   },
   decorators: [
     (Story, c) => {
+      const { route = '/' } = c.args;
       return (
-        <BrowserRouter>
+        <MemoryRouter initialEntries={[route]}>
           <Story />
-        </BrowserRouter>
-      )
-    }
-  ]
+        </MemoryRouter>
+      );
+    },
+  ],
 
 };
 
