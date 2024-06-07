@@ -2,29 +2,30 @@ import isMobile from '@/utils/is-mobile';
 
 import type { Notifications } from './types';
 
-const title = 'React PWA';
+const title = 'React PWA & Shadcn';
 
-const email = 'auther-email@gmail.com';
+const email = 'sia-fl@outlook.com';
 
-const repository = 'https://github.com/suren-atoyan/react-pwa';
+const repository = 'https://github.com/sia-fl/buess';
 
 const messages = {
   app: {
     crash: {
-      title: 'Oooops... Sorry, I guess, something went wrong. You can:',
+      title: '程序崩溃了！',
       options: {
-        email: `contact with author by this email - ${email}`,
-        reset: 'Press here to reset the application',
+        email: `通过这个邮箱联系作者 - ${email}`,
+        reset: '点击这里重置应用程序',
       },
     },
   },
   loader: {
-    fail: 'Hmmmmm, there is something wrong with this component loading process... Maybe trying later would be the best idea',
+    fail: '未知的错误导致程序崩溃，如急需处理请通过邮箱提交 截图、文字 描述该错误信息，维护人员将尽快为您解决。',
   },
   images: {
-    failed: 'something went wrong during image loading :(',
+    failed: '加载图像时出了点问题 :(',
   },
-  404: 'Hey bro? What are you looking for?',
+  or: '或者',
+  404: '嘿，兄弟，你在找什么？',
 };
 
 const dateFormat = 'MMMM DD, YYYY';

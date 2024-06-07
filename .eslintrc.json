@@ -1,5 +1,7 @@
 {
-  "ignorePatterns": ["src/components/ui"],
+  "ignorePatterns": [
+    "src/components/ui"
+  ],
   "env": {
     "browser": true,
     "es2021": true
@@ -26,14 +28,6 @@
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "no-restricted-imports": [
-      "error",
-      {
-        "patterns": [
-          "@mui/*/*/*"
-        ]
-      }
-    ]
+    "react-hooks/exhaustive-deps": "warn"
   }
 }

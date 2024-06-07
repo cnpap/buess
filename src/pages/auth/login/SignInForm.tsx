@@ -25,8 +25,7 @@ const formSchema = z.object({
     }),
 });
 
-export function SignInForm() {
-
+export default function SignInForm() {
   return (
     <>
       <div className="grid gap-4">

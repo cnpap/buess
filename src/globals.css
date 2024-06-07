@@ -4,6 +4,7 @@
 
 @font-face {
   font-family: 'NotoSansSC';
+  /*noinspection CssUnknownTarget*/
   src: url('/NotoSansSC-Medium.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
@@ -12,6 +13,10 @@
 
 body * {
   font-family: 'NotoSansSC', sans-serif !important;
+}
+
+#root {
+  height: 100vh;
 }
 
 @layer base {

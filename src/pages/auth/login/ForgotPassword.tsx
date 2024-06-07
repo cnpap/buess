@@ -14,7 +14,7 @@ const formSchema = z.object({
     }),
 });
 
-export function ForgotPassword() {
+export default function ForgotPassword() {
   // noinspection HtmlUnknownTarget
   return (
     <>

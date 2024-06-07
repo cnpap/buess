@@ -14,14 +14,12 @@ const formSchema = z.object({
     }),
 });
 
-export function SignUpForm() {
+export default function SignUpForm() {
   // noinspection HtmlUnknownTarget
   return (
     <>
       <div className="grid gap-4">
-        <AutoForm
-          formSchema={formSchema}
-        >
+        <AutoForm formSchema={formSchema}>
           <Link to="/auth/sign-in" className="ml-auto inline-block text-sm underline">
             去登录?
           </Link>
