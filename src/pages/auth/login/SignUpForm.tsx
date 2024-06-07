@@ -1,36 +1,34 @@
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Link } from 'react-router-dom';
+import AutoForm from '@/components/ui/auto-form';
+import { z } from 'zod';
+
+const formSchema = z.object({
+  email: z
+    .string({
+      required_error: 'email 是必填的',
+    })
+    .describe('邮箱')
+    .email({
+      message: 'email 格式不正确',
+    }),
+});
 
 export function SignUpForm() {
   // noinspection HtmlUnknownTarget
   return (
     <>
       <div className="grid gap-4">
-        <div className="grid gap-2">
-          <Label htmlFor="email">邮箱</Label>
-          <Input id="email" type="email" placeholder="em@x.com" required />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="password">密码</Label>
-          <Input id="password" type="password" required />
-        </div>
-        <Link to="/forgot-password" className="ml-auto inline-block text-sm underline">
-          找回密码?
-        </Link>
-        <Button type="submit" className="w-full">
-          登录
-        </Button>
-
-        <Button variant="outline" className="w-full">
-          通过谷歌登录
-        </Button>
-      </div>
-      <div className="mt-4 text-center text-sm">
-        <Link to="#" className="underline">
-          注册账号
-        </Link>
+        <AutoForm
+          formSchema={formSchema}
+        >
+          <Link to="/auth/sign-in" className="ml-auto inline-block text-sm underline">
+            去登录?
+          </Link>
+          <Button type="submit" className="w-full">
+            发送注册连接
+          </Button>
+        </AutoForm>
       </div>
     </>
   );

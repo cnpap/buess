@@ -29,7 +29,7 @@ export const SignIn = AuthRouteTemplate.bind({});
     args: Record<string, string>;
   }
 ).args = {
-  route: '/auth/',
+  route: '/auth/sign-in',
 };
 
 // noinspection JSUnusedGlobalSymbols

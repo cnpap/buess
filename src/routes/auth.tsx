@@ -7,7 +7,7 @@ const AuthRouteTemplate = () => (
   <>
     <Routes>
       <Route path="/auth" element={<AuthLayout />}>
-        <Route index element={<SignInForm />} />
+        <Route path={'/auth/sign-in'} element={<SignInForm />} />
         <Route path={'/auth/sign-up'} element={<SignUpForm />} />
       </Route>
     </Routes>
