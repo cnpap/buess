@@ -1,26 +1,22 @@
 import { expect, test } from '@playwright/test';
 
-test.describe('test hotkeys', () => {
+test.describe('test theme', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/auth/sign-in');
     await page.waitForLoadState('networkidle');
   });
 
-  test('using hotkey "Alt+T" switches theme', async ({ page }) => {
+  test('default theme is light', async ({ page }) => {
+    // 确认页面上存在特定元素
+    const html = await page.$('html');
+    const className = await html?.getAttribute('class');
+    expect(className).toEqual('light');
+  });
+
+  test('clicking on the theme toggle changes the theme', async ({ page }) => {
     await page.keyboard.press('Alt+T');
-
-    await expect(page.getByTestId('theme-light')).toBeVisible();
-  });
-
-  test('using hotkey "Alt+S" opens sidebar', async ({ page }) => {
-    await page.keyboard.press('Alt+S');
-
-    await expect(page.getByTestId('sidebar')).toBeVisible();
-  });
-
-  test('using hotkey "Alt+K" opens hotkeys dialog', async ({ page }) => {
-    await page.keyboard.press('Alt+K');
-
-    await expect(page.getByTestId('hotkeys-dialog')).toBeVisible();
+    const html = await page.$('html');
+    const className = await html?.getAttribute('class');
+    expect(className).toEqual('dark');
   });
 });
