@@ -15,7 +15,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "rimraf dist && tsc && vite build",
     "preview": "vite preview",
     "https-preview": "serve dist",
     "prepare": "husky install && cp -n env/.shared .env &",
@@ -62,7 +62,6 @@
     "recoil": "^0.7.7",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "tslib": "^2.6.2",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -93,8 +92,10 @@
     "lint-staged": "^15.2.0",
     "postcss": "^8.4.38",
     "prettier": "3.1.1",
+    "rimraf": "^5.0.7",
     "storybook": "^8.1.5",
     "tailwindcss": "^3.4.3",
+    "tslib": "^2.6.3",
     "typescript": "^5.3.3",
     "vite": "^5.0.9",
     "vite-plugin-pwa": "^0.17.4",
