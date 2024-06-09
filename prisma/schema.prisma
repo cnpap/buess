@@ -1,0 +1,135 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGODB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum UserStatus {
+  INACTIVE // 用户处于非活动状态
+  ACTIVE // 用户处于活跃状态
+}
+
+enum MemberRole {
+  GUEST // 访客角色
+  MEMBER // 成员角色
+  MANAGER // 经理角色
+  LEADER // 领导角色
+}
+
+enum OrganizationRole {
+  ADMIN // 管理员角色
+  MANAGER // 经理角色
+  MEMBER // 成员角色
+}
+
+enum InvitationStatus {
+  REJECTED // 邀请被拒绝
+  ACCEPTED // 邀请被接受
+  INVITING // 邀请中
+}
+
+model User {
+  id String @id @default(auto()) @map("_id") @db.ObjectId // 用户唯一标识符
+
+  email    String    @unique // 用户的电子邮件，唯一
+  password String // 用户的密码
+  name     String? // 用户的名字，可选
+  country  String? // 用户所在的国家，可选
+  bio      String? // 用户的简介，可选
+  photo    String? // 用户的照片 URL，可选
+  dob      DateTime? // 用户的出生日期，可选
+  settings Json? // 用户的设置，以 JSON 格式存储，可选
+
+  createdAt DateTime? // 用户记录的创建时间
+  createdBy String? // 创建用户记录的用户 ID
+  updatedAt DateTime? // 用户记录的更新时间
+  updatedBy String? // 更新用户记录的用户 ID
+
+  status UserStatus? // 用户状态（活动/非活动）
+
+  Members             Members[] // 用户与项目成员的关系
+  OrganizationMembers OrganizationMembers[] // 用户与组织成员的关系
+}
+
+model Organization {
+  id String @id @default(auto()) @map("_id") @db.ObjectId // 组织唯一标识符
+
+  name   String  @unique // 组织名称，唯一
+  cover  String? // 组织封面图片 URL
+  avatar String? // 组织头像 URL
+  desc   String? // 组织描述
+
+  createdAt DateTime? // 组织记录的创建时间
+  createdBy String? // 创建组织记录的用户 ID
+  updatedAt DateTime? // 组织记录的更新时间
+  updatedBy String? // 更新组织记录的用户 ID
+
+  OrganizationMembers OrganizationMembers[] // 组织的成员关系
+  Project             Project[] // 组织的项目关系
+}
+
+model OrganizationMembers {
+  id String @id @default(auto()) @map("_id") @db.ObjectId // 组织成员唯一标识符
+
+  createdAt DateTime? // 组织成员记录的创建时间
+  createdBy String? // 创建组织成员记录的用户 ID
+  updatedAt DateTime? // 组织成员记录的更新时间
+  updatedBy String? // 更新组织成员记录的用户 ID
+
+  role   OrganizationRole // 组织成员的角色（管理员/经理/成员）
+  status InvitationStatus // 邀请状态（拒绝/接受/邀请中）
+
+  User           User?         @relation(fields: [userId], references: [id]) // 组织成员与用户的关系
+  userId         String?       @db.ObjectId // 关联的用户 ID
+  Organization   Organization? @relation(fields: [organizationId], references: [id]) // 组织成员与组织的关系
+  organizationId String        @db.ObjectId // 关联的组织 ID
+}
+
+model Tag {
+  id String @id @default(auto()) @map("_id") @db.ObjectId // 标签唯一标识符
+
+  name  String // 标签名称
+  color String // 标签颜色
+
+  Project   Project? @relation(fields: [projectId], references: [id]) // 标签与项目的关系
+  projectId String   @db.ObjectId // 关联的项目 ID
+}
+
+model Project {
+  id String @id @default(auto()) @map("_id") @db.ObjectId // 项目唯一标识符
+
+  name       String // 项目名称
+  desc       String? // 项目描述
+  cover      String? // 项目封面图片 URL
+  icon       String? // 项目图标 URL
+  isArchived Boolean? @default(false) // 项目是否被归档
+
+  createdBy String? // 创建项目记录的用户 ID
+  createdAt DateTime? // 项目记录的创建时间
+  updatedBy String? // 更新项目记录的用户 ID
+  updatedAt DateTime? // 项目记录的更新时间
+
+  Organization   Organization? @relation(fields: [organizationId], references: [id]) // 项目与组织的关系
+  organizationId String        @db.ObjectId // 关联的组织 ID
+  Tag            Tag[] // 项目与标签的关系
+  Members        Members[] // 项目与成员的关系
+}
+
+model Members {
+  id String @id @default(auto()) @map("_id") @db.ObjectId // 项目成员唯一标识符
+
+  createdBy String? // 创建项目成员记录的用户 ID
+  createdAt DateTime? // 项目成员记录的创建时间
+  updatedBy String? // 更新项目成员记录的用户 ID
+  updatedAt DateTime? // 项目成员记录的更新时间
+
+  role MemberRole // 项目成员的角色（访客/成员/经理/领导）
+
+  Project   Project? @relation(fields: [projectId], references: [id]) // 项目成员与项目的关系
+  projectId String   @db.ObjectId // 关联的项目 ID
+  User      User?    @relation(fields: [userId], references: [id]) // 项目成员与用户的关系
+  userId    String?  @db.ObjectId // 关联的用户 ID
+}
