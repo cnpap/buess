@@ -71,4 +71,4 @@ jobs:
       - name: Unit tests
         env:
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
-        run: npm run test:unit
+        run: npm run seed && npm run test:unit
