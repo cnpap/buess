@@ -60,6 +60,7 @@ jobs:
   unit_tests:
     needs: install
     runs-on: ubuntu-latest
+    environment: 'development'
     steps:
       - uses: actions/checkout@v2
       - name: Cached node modules

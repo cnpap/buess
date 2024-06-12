@@ -35,6 +35,18 @@ export default defineConfig(() => {
         '@storybook/blocks',
         '@mdx-js/react'
       ]
+    },
+    build: {
+      rollupOptions: {
+        external: [
+          'node:assert',
+          'node:crypto',
+          'node:util',
+          'fs',
+          'path',
+          'os'
+        ]
+      }
     }
   })
 });
