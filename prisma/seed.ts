@@ -1,14 +1,13 @@
 // noinspection JSIgnoredPromiseFromCall
 
 import { faker } from '@faker-js/faker';
-import { UserStatus, InvitationStatus, OrganizationRole, Prisma, PrismaClient } from '@prisma/client';
+import { UserStatus, InvitationStatus, OrganizationRole, Prisma } from '@prisma/client';
 import { hash } from 'argon2';
-
-const prisma = new PrismaClient();
-
-const primaryUserEmail = 'justlikesuolong@outlook.com';
+import { prisma } from '../src/utils/facade';
+import { defaultPassword, primaryUserEmail } from './const';
 
 async function createUsers() {
+  await prisma.organizationMembers.deleteMany({})
   await prisma.user.deleteMany({})
   function gen(): Prisma.UserCreateManyInput {
     return {
@@ -27,7 +26,7 @@ async function createUsers() {
     };
   }
 
-  const pwd = await hash('123456');
+  const pwd = await hash(defaultPassword);
   const primaryUserInput: Prisma.UserCreateManyInput = {
     email: primaryUserEmail,
     password: pwd,
