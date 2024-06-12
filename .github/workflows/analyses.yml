@@ -68,4 +68,6 @@ jobs:
           path: node_modules
           key: ${{ github.sha }}
       - name: Unit tests
+        env:
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
         run: npm run test:unit
