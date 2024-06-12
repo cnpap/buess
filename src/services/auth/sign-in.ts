@@ -1,6 +1,5 @@
 import { z } from 'zod';
-import { prisma } from '@/utils/facade';
-import { verify } from 'argon2';
+import { facade } from '@/utils/facade';
 
 export const formSchema = z.object({
   email: z
@@ -34,7 +33,7 @@ export async function signIn(values: z.infer<typeof formSchema>) {
   formSchema.parse(values);
 
   const { email, password } = values;
-  const user = await prisma.user.findFirst({
+  const user = await facade.prisma.user.findFirst({
     where: {
       email,
     },
@@ -53,6 +52,7 @@ export async function signIn(values: z.infer<typeof formSchema>) {
     };
   }
 
+  const { verify } = await import('argon2');
   const isPasswordValid = await verify(user.password, password);
   if (!isPasswordValid) {
     return {

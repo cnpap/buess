@@ -3,12 +3,18 @@
 import { faker } from '@faker-js/faker';
 import { UserStatus, InvitationStatus, OrganizationRole, Prisma } from '@prisma/client';
 import { hash } from 'argon2';
-import { prisma } from '../src/utils/facade';
 import { defaultPassword, primaryUserEmail } from './const';
+import { maPrisma } from '../src/utils/facade-init';
+import { facade } from '../src/utils/facade';
+
+maPrisma();
+
+const { prisma } = facade;
 
 async function createUsers() {
-  await prisma.organizationMembers.deleteMany({})
-  await prisma.user.deleteMany({})
+  await prisma.organizationMembers.deleteMany({});
+  await prisma.user.deleteMany({});
+
   function gen(): Prisma.UserCreateManyInput {
     return {
       email: faker.internet.email(),
@@ -51,7 +57,8 @@ async function createUsers() {
 }
 
 async function createOrganization() {
-  await prisma.organization.deleteMany({})
+  await prisma.organization.deleteMany({});
+
   function gen(): Prisma.OrganizationCreateManyInput {
     return {
       name: faker.company.name(),
@@ -85,7 +92,7 @@ async function createOrganization() {
 }
 
 async function createOrganizationMembers() {
-  await prisma.organizationMembers.deleteMany({})
+  await prisma.organizationMembers.deleteMany({});
   const primaryOrg = await prisma.organization.findFirst({
     where: {
       name: 'Sia',
@@ -121,4 +128,4 @@ async function _do() {
   await createOrganizationMembers();
 }
 
-_do()
+_do();

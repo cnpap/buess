@@ -1,3 +1,5 @@
 import { PrismaClient } from '@prisma/client';
 
-export const prisma = new PrismaClient();
+export const facade = {
+  prisma: null as unknown as PrismaClient,
+};
