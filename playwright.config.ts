@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import * as process from 'node:process';
 
 const PORT = process.env.CI ? 4173 : 5173;
 const BASE_URL = `http://localhost:${PORT}`;
