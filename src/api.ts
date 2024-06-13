@@ -1,5 +1,7 @@
 import * as url from 'node:url';
 import Koa from 'koa';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import k2c from 'koa2-connect';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import signale from 'signale';
