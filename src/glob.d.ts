@@ -4,7 +4,7 @@ declare module 'koa2-connect' {
   export default function k2c(middleware: Middleware): Middleware;
 }
 
-declare interface UserJwtPayload {
+export interface UserJwtPayload {
   /**
    * 用户表 id
    */
