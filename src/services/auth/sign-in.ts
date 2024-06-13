@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { facade } from '@/utils/facade';
+import { genToken } from '@/services/func';
 
 export const formSchema = z.object({
   email: z
@@ -62,7 +63,15 @@ export async function signIn(values: z.infer<typeof formSchema>) {
     };
   }
 
+  const token = await genToken({
+    id: user.id,
+    email: user.email,
+  });
+
   return {
-    data: user,
+    data: {
+      user,
+      token,
+    },
   };
 }

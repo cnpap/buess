@@ -6,6 +6,8 @@ import { withErrorHandler } from '@/error-handling';
 import AppErrorBoundaryFallback from '@/error-handling/fallbacks/App';
 import { useTheme } from './components/theme-provider';
 import { useHotkeys } from 'react-hotkeys-hook';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 export function useToggleEvent() {
   const { setTheme, theme } = useTheme();
@@ -25,6 +27,7 @@ function App() {
       <BrowserRouter>
         <AuthRouteTemplate />
       </BrowserRouter>
+      <ToastContainer />
     </Fragment>
   );
 }
