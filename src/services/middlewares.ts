@@ -1,15 +1,18 @@
 import { verifyToken } from '@/services/func';
-import { context, getTokenByHeaders } from 'viteser';
+import { context, getTokenByHeaders, makeMiddleware } from 'viteser';
 
-export async function logined() {
+export async function signIned() {
   const ctx = context();
   const token = getTokenByHeaders(ctx.headers);
   try {
     await verifyToken(token);
   } catch (e) {
     return {
+      code: 401,
       type: 'error',
       message: '请重新登录',
     };
   }
 }
+
+export const signInedMiddleware = makeMiddleware(signIned);
