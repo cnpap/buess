@@ -5,26 +5,26 @@ import { genToken } from '@/services/func';
 export const formSchema = z.object({
   email: z
     .string({
-      required_error: 'email 是必填的',
+      required_error: 'email is required',
     })
-    .describe('邮箱')
+    .describe('email')
     .email({
-      message: 'email 格式不正确',
+      message: 'email is invalid',
     }),
   password: z
     .string({
-      required_error: 'password 是必填的',
+      required_error: 'password is required',
     })
-    .describe('密码')
+    .describe('password')
     .min(8, {
-      message: '密码 至少 8 个字符',
+      message: 'password is too short, at least 8 characters',
     })
     .max(30, {
-      message: '密码 最多 30 个字符',
+      message: 'password is too long, at most 30 characters',
     }),
 });
 
-const signInFailMessage = '用户名或密码错误';
+const signInFailMessage = 'email or password is incorrect';
 
 export async function signIn(values: z.infer<typeof formSchema>) {
   'use server';

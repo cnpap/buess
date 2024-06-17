@@ -11,21 +11,21 @@ const repository = 'https://github.com/sia-fl/buess';
 const messages = {
   app: {
     crash: {
-      title: '程序崩溃了！',
+      title: 'The app has crashed!',
       options: {
-        email: `通过这个邮箱联系作者 - ${email}`,
-        reset: '点击这里重置应用程序',
+        email: `Contact the author through this email - ${email}`,
+        reset: 'Click here to reset the application',
       },
     },
   },
   loader: {
-    fail: '未知的错误导致程序崩溃，如急需处理请通过邮箱提交 截图、文字 描述该错误信息，维护人员将尽快为您解决。',
+    fail: 'An unknown error caused the app to crash. If urgent, please submit a screenshot and description of the error via email. Our maintenance team will resolve it as soon as possible.',
   },
   images: {
-    failed: '加载图像时出了点问题 :(',
+    failed: 'Something went wrong while loading the image :(',
   },
-  or: '或者',
-  404: '嘿，兄弟，你在找什么？',
+  or: 'or',
+  404: 'Hey buddy, what are you looking for?',
 };
 
 const dateFormat = 'MMMM DD, YYYY';

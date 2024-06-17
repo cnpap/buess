@@ -39,7 +39,7 @@ export default function SideNav({ data }: { data: Menu[] }) {
           aria-label={label}
         >
           <div>
-            <Icon className="size-3" />
+            <Icon className="size-5" />
             <div>{label}</div>
           </div>
         </Button>

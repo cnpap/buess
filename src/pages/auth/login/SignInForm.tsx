@@ -59,7 +59,7 @@ export default function SignInForm() {
           toast.success('sign in success !', {
             position: 'top-center',
           });
-          navigate('/main/dash');
+          navigate('/main/home');
           // localStorage.setItem('token', res.data.token)
         }
       })
@@ -80,26 +80,26 @@ export default function SignInForm() {
           }}
         >
           <Link to="/auth/forgot-password" className="ml-auto inline-block text-sm underline">
-            找回密码?
+            forgot password?
           </Link>
           <LoadingButton loading={submitting} type="submit" className="w-full">
-            登录
+            sign in
           </LoadingButton>
           <div className={`flex items-center justify-center space-x-1`}>
             <Button variant="outline" className="w-full">
               <ChromeIcon />
-              <p className={'ml-2'}>谷歌登录</p>
+              <p className={'ml-2'}>sign by google</p>
             </Button>
             <Button variant="outline" className="w-full">
               <GithubIcon />
-              <p className={'ml-2'}>Github登录</p>
+              <p className={'ml-2'}>sign by github</p>
             </Button>
           </div>
         </AutoForm>
       </div>
       <div className="mt-4 text-center text-sm">
         <Link to="/auth/sign-up" className="underline">
-          通过 email 注册账号
+          sign up by email
         </Link>
       </div>
     </>

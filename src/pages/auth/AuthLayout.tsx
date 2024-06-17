@@ -13,6 +13,9 @@ export default function AuthLayout() {
     >
       <div className="z-20 flex items-center justify-center py-12">
         <div className="mx-auto grid w-[300px] gap-6">
+          <div className={'flex justify-center'}>
+            <img src={'/logo.png'} style={{ width: '200px' }} alt="logo" />
+          </div>
           <Outlet />
         </div>
       </div>

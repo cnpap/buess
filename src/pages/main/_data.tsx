@@ -10,22 +10,22 @@ export interface Menu {
 
 export const topMenus: Menu[] = [
   {
-    label: '首页',
+    label: 'home',
     path: '/main/home',
     icon: Home,
   },
   {
-    label: '数据',
+    label: 'data',
     path: '/main/data',
     icon: Database,
   },
   {
-    label: '集成',
-    path: '/main/integration',
+    label: 'cicd',
+    path: '/main/cicd',
     icon: Code2,
   },
   {
-    label: '实验',
+    label: 'test',
     icon: Grid2x2Check,
     path: '/main/test',
   },
@@ -33,12 +33,12 @@ export const topMenus: Menu[] = [
 
 export const bottomMenus: Menu[] = [
   {
-    label: '帮助',
+    label: 'help',
     icon: LifeBuoy,
     path: '/main/help',
   },
   {
-    label: '账户',
+    label: 'account',
     icon: SquareUser,
     path: '/main/account',
   },

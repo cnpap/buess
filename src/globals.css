@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'NotoSansSC';
+  /*noinspection CssUnknownTarget*/
+  src: url('/JetBrainsMono-Medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body * {
+  font-family: 'NotoSansSC', sans-serif !important;
+}
+
 #root {
   height: 100vh;
 }

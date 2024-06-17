@@ -8,7 +8,7 @@ const formSchema = z.object({
     .string({
       required_error: 'email 是必填的',
     })
-    .describe('邮箱')
+    .describe('email')
     .email({
       message: 'email 格式不正确',
     }),

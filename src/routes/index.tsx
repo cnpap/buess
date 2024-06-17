@@ -7,6 +7,8 @@ import ForgotPassword from '@/pages/auth/login/ForgotPassword';
 import Index from '@/pages/Index';
 import MainHome from '@/pages/main/home';
 import MainData from '@/pages/main/data';
+import MainTest from '@/pages/main/test';
+import MainCicd from '@/pages/main/cicd';
 
 const RouteTemplate = () => {
   return (
@@ -20,7 +22,8 @@ const RouteTemplate = () => {
       <Route path="/main" element={<MainLayout />}>
         <Route path="/main/home" element={<MainHome />} />
         <Route path="/main/data" element={<MainData />} />
-        <Route path="/main/test" element={<MainHome />} />
+        <Route path="/main/test" element={<MainTest />} />
+        <Route path="/main/cicd" element={<MainCicd />} />
       </Route>
     </Routes>
   );
