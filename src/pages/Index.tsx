@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useMount } from 'ahooks';
 
-function Home() {
+function Index() {
   const navigate = useNavigate();
   useMount(() => {
     navigate('/auth/sign-in');
@@ -9,4 +9,4 @@ function Home() {
   return <div></div>;
 }
 
-export default Home;
+export default Index;

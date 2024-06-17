@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AutoForm from '@/components/ui/auto-form';
 import { formSchema, signIn } from '@/services/auth/sign-in';
 import { useState } from 'react';
@@ -49,6 +49,7 @@ function GithubIcon() {
 }
 
 export default function SignInForm() {
+  const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     setSubmitting(true);
@@ -58,6 +59,7 @@ export default function SignInForm() {
           toast.success('sign in success !', {
             position: 'top-center',
           });
+          navigate('/main/dash');
           // localStorage.setItem('token', res.data.token)
         }
       })
@@ -83,7 +85,6 @@ export default function SignInForm() {
           <LoadingButton loading={submitting} type="submit" className="w-full">
             登录
           </LoadingButton>
-          {/*  创建两个 button 然后左右布局，间距 1rem*/}
           <div className={`flex items-center justify-center space-x-1`}>
             <Button variant="outline" className="w-full">
               <ChromeIcon />

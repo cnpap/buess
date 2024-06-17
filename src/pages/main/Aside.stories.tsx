@@ -1,12 +1,11 @@
 import type { Meta } from '@storybook/react';
-import SignInForm from './login/SignInForm';
-import AuthLayout from '@/pages/auth/AuthLayout';
 import RouteTemplate from '@/routes';
+import Aside from '@/pages/main/Aside';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-  title: 'Page/Auth',
-  component: AuthLayout,
+  title: 'Page/Main',
+  component: Aside,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: 'centered',
@@ -16,38 +15,28 @@ const meta = {
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {},
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-} satisfies Meta<typeof SignInForm>;
+} satisfies Meta<typeof Aside>;
 
 // noinspection JSUnusedGlobalSymbols
 export default meta;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 // noinspection JSUnusedGlobalSymbols
-export const SignIn = RouteTemplate.bind({});
+export const AsideByRouteHome = RouteTemplate.bind({});
 (
-  SignIn as unknown as {
+  AsideByRouteHome as unknown as {
     args: Record<string, string>;
   }
 ).args = {
-  route: '/auth/sign-in',
+  route: '/main/home',
 };
 
 // noinspection JSUnusedGlobalSymbols
-export const SignUp = RouteTemplate.bind({});
+export const AsideByRouteData = RouteTemplate.bind({});
 (
-  SignUp as unknown as {
+  AsideByRouteData as unknown as {
     args: Record<string, string>;
   }
 ).args = {
-  route: '/auth/sign-up',
-};
-
-// noinspection JSUnusedGlobalSymbols
-export const ForgotPassword = RouteTemplate.bind({});
-(
-  SignUp as unknown as {
-    args: Record<string, string>;
-  }
-).args = {
-  route: '/auth/forgot-password',
+  route: '/main/data',
 };

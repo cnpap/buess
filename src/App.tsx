@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import AuthRouteTemplate from '@/routes/auth';
+import RouteTemplate from '@/routes';
 import '@/globals.css';
 import { withErrorHandler } from '@/error-handling';
 import AppErrorBoundaryFallback from '@/error-handling/fallbacks/App';
@@ -25,7 +25,7 @@ function App() {
   return (
     <Fragment>
       <BrowserRouter>
-        <AuthRouteTemplate />
+        <RouteTemplate />
       </BrowserRouter>
       <ToastContainer />
     </Fragment>
