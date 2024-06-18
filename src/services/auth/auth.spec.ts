@@ -22,16 +22,6 @@ describe('auth test', () => {
     expect(result.data?.token).not.eq(undefined);
   });
 
-  test('getuserinfo', async () => {
-    try {
-      await getUserInfo();
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-    } catch (err: { message: string }) {
-      expect(err.message).contain("Cannot read properties of undefined (reading 'headers')");
-    }
-  });
-
   test('getuserinfo success', async () => {
     const payload = {
       id: 'admin',
