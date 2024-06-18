@@ -15,8 +15,8 @@ enum UserStatus {
 enum MemberRole {
   GUEST // 访客角色
   MEMBER // 成员角色
-  MANAGER // 经理角色
-  LEADER // 领导角色
+  CREATOR // 创建人角色
+  ADMIN // 管理员角色
 }
 
 enum OrganizationRole {
@@ -118,7 +118,7 @@ model Members {
   createdAt DateTime // 项目成员记录的创建时间
   updatedAt DateTime // 项目成员记录的更新时间
 
-  role MemberRole // 项目成员的角色（访客/成员/经理/领导）
+  role MemberRole // 项目成员的角色 (访客/成员/创建人/管理员)
 
   Project   Project @relation(fields: [projectId], references: [id]) // 项目成员与项目的关系
   projectId String  @db.ObjectId // 关联的项目 ID
