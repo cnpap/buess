@@ -1,8 +1,20 @@
+import { Prisma, TeamRole, ProjectMemberRole } from '@prisma/client';
+import { InvitationStatus } from '.prisma/client';
+
 declare module 'koa2-connect' {
   import type { Middleware } from 'koa';
   // noinspection JSUnusedGlobalSymbols
   export default function k2c(middleware: Middleware): Middleware;
 }
+
+export type ProjectPayload = Pick<Prisma.ProjectCreateInput, 'name' | 'cover' | 'id' | 'desc'>;
+
+export type TeamPayload = {
+  lock?: boolean;
+  role: TeamRole;
+  status: InvitationStatus;
+  projects: ProjectPayload[];
+} & Pick<Prisma.TeamCreateInput, 'name' | 'cover' | 'id'>;
 
 export interface UserJwtPayload {
   /**
@@ -10,23 +22,14 @@ export interface UserJwtPayload {
    */
   id: string;
   /**
-   * 手机号
+   * 所有团队
    */
-  phone: string;
+  teams: TeamPayload[];
   /**
-   * 当前租户 id、name
+   * 当前锁定项目
    */
-  tid: string;
-  /**
-   * 具备权限，可切换的租户
-   */
-  tids: string[];
-  /**
-   * 当前租户下某个公司 id、name
-   */
-  cid: string;
-  /**
-   * 具备权限，可切换的公司
-   */
-  cids: string[];
+  project: {
+    id: string;
+    member: ProjectMemberRole;
+  };
 }

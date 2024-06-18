@@ -1,7 +1,7 @@
 // noinspection JSIgnoredPromiseFromCall
 
 import { faker } from '@faker-js/faker';
-import { UserStatus, InvitationStatus, OrganizationRole, MemberRole, Prisma } from '@prisma/client';
+import { UserStatus, InvitationStatus, TeamRole, ProjectMemberRole, Prisma } from '@prisma/client';
 import { hash } from 'argon2';
 import { defaultPassword, primaryUserEmail } from './const';
 import { maPrisma } from '../src/utils/facade-init';
@@ -12,11 +12,11 @@ maPrisma();
 const { prisma } = facade;
 
 async function clear() {
-  await prisma.organizationMembers.deleteMany({});
-  await prisma.members.deleteMany({});
+  await prisma.teamMembers.deleteMany({});
+  await prisma.projectMembers.deleteMany({});
   await prisma.tag.deleteMany({});
   await prisma.project.deleteMany({});
-  await prisma.organization.deleteMany({});
+  await prisma.team.deleteMany({});
   await prisma.user.deleteMany({});
 }
 
@@ -62,12 +62,11 @@ async function createUsers() {
   });
 }
 
-async function createOrganization() {
-  function gen(): Prisma.OrganizationCreateManyInput {
+async function createTeam() {
+  function gen(): Prisma.TeamCreateManyInput {
     return {
       name: faker.company.name(),
       cover: faker.image.avatar(),
-      avatar: faker.image.avatar(),
       desc: faker.lorem.sentence(),
 
       createdAt: new Date(),
@@ -75,23 +74,22 @@ async function createOrganization() {
     };
   }
 
-  const primaryOrg: Prisma.OrganizationCreateManyInput = {
+  const primaryOrg: Prisma.TeamCreateManyInput = {
     name: 'Sia',
     cover: faker.image.avatar(),
-    avatar: faker.image.avatar(),
     desc: faker.lorem.sentence(),
 
     createdAt: new Date(),
     updatedAt: new Date(),
   };
 
-  const organizations = [
+  const teams = [
     primaryOrg,
     ...Array.from({ length: 10 }, gen),
   ];
 
-  await prisma.organization.createMany({
-    data: organizations,
+  await prisma.team.createMany({
+    data: teams,
   });
 }
 
@@ -99,14 +97,14 @@ let primaryOrgId: string;
 let primaryUserId: string;
 
 async function getPrimaryOrgId() {
-  const primaryOrg = await prisma.organization.findFirst({
+  const primaryOrg = await prisma.team.findFirst({
     where: {
       name: 'Sia',
     },
   });
 
   if (!primaryOrg) {
-    throw new Error('Primary organization not found');
+    throw new Error('Primary team not found');
   }
 
   primaryOrgId = primaryOrg.id;
@@ -130,23 +128,23 @@ async function getPrimaryUserId() {
   return primaryUserId;
 }
 
-async function createOrganizationMembers() {
+async function createTeamMembers() {
   const primaryOrgId = await getPrimaryOrgId();
   const primaryUserId = await getPrimaryUserId();
 
   if (!primaryOrgId || !primaryUserId) {
-    throw new Error('Primary organization or user not found');
+    throw new Error('Primary team or user not found');
   }
 
-  await prisma.organizationMembers.create({
+  await prisma.teamMembers.create({
     data: {
       createdAt: new Date(),
       updatedAt: new Date(),
 
-      role: OrganizationRole.ADMIN,
+      role: TeamRole.ADMIN,
       status: InvitationStatus.ACCEPTED,
 
-      organizationId: primaryOrgId,
+      teamId: primaryOrgId,
       userId: primaryUserId,
     },
   });
@@ -164,7 +162,7 @@ async function createProject() {
       createdAt: new Date(),
       updatedAt: new Date(),
 
-      organizationId: primaryOrgId
+      teamId: primaryOrgId
     };
   }
 
@@ -198,12 +196,12 @@ async function createProjectMembers() {
   const primaryUserId = await getPrimaryUserId();
 
   if (!primaryOrgId || !primaryUserId) {
-    throw new Error('Primary organization or user not found');
+    throw new Error('Primary team or user not found');
   }
 
   const projects = await prisma.project.findMany({
     where: {
-      organizationId: primaryOrgId,
+      teamId: primaryOrgId,
     },
   });
 
@@ -211,19 +209,19 @@ async function createProjectMembers() {
     throw new Error('Projects not found');
   }
 
-  const projectMembers: Prisma.MembersCreateManyInput[] = projects.map(project => {
+  const projectMembers: Prisma.ProjectMembersCreateManyInput[] = projects.map(project => {
     return {
       createdAt: new Date(),
       updatedAt: new Date(),
 
-      role: MemberRole.CREATOR,
+      role: ProjectMemberRole.CREATOR,
 
       projectId: project.id,
       userId: primaryUserId,
     };
   });
 
-  await prisma.members.createMany({
+  await prisma.projectMembers.createMany({
     data: projectMembers,
   });
 }
@@ -231,8 +229,8 @@ async function createProjectMembers() {
 async function _do() {
   await clear();
   await createUsers();
-  await createOrganization();
-  await createOrganizationMembers();
+  await createTeam();
+  await createTeamMembers();
   await createProject();
   await createProjectMembers();
   await createTags();

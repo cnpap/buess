@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { z } from 'zod';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { toast } from 'react-toastify';
+import { useMount } from 'ahooks';
+import { preLoad } from '@/utils/pre-load';
 
 function ChromeIcon() {
   return (
@@ -50,6 +52,7 @@ function GithubIcon() {
 
 export default function SignInForm() {
   const navigate = useNavigate();
+  const preLoadCallback = preLoad();
   const [submitting, setSubmitting] = useState(false);
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     setSubmitting(true);
@@ -59,12 +62,19 @@ export default function SignInForm() {
           toast.success('sign in success !', {
             position: 'top-center',
           });
-          navigate('/main/home');
-          // localStorage.setItem('token', res.data.token)
+          localStorage.setItem('token', res.data.token);
+          preLoadCallback().then(() => {
+            navigate('/main/home');
+          });
         }
       })
       .catch(() => setSubmitting(false));
   };
+  useMount(() => {
+    preLoadCallback().then(() => {
+      navigate('/main/home');
+    });
+  });
   return (
     <>
       <div className="grid gap-4">
@@ -85,14 +95,14 @@ export default function SignInForm() {
           <LoadingButton loading={submitting} type="submit" className="w-full">
             sign in
           </LoadingButton>
-          <div className={`flex items-center justify-center space-x-1`}>
+          <div className={`flex flex-col gap-1 items-center justify-center space-x-1`}>
             <Button variant="outline" className="w-full">
               <ChromeIcon />
-              <p className={'ml-2'}>sign by google</p>
+              <p className={'ml-2 w-32 text-start'}>sign by google</p>
             </Button>
             <Button variant="outline" className="w-full">
               <GithubIcon />
-              <p className={'ml-2'}>sign by github</p>
+              <p className={'ml-2 w-32 text-start'}>sign by github</p>
             </Button>
           </div>
         </AutoForm>
