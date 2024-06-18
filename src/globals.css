@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --header-height: 3.5rem; /* 默认 h-14 是 3.5rem */
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-height: 60px; /* 在 lg 断点时的高度 */
+  }
+}
+
 @font-face {
   font-family: 'NotoSansSC';
   /*noinspection CssUnknownTarget*/
