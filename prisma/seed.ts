@@ -11,10 +11,16 @@ maPrisma();
 
 const { prisma } = facade;
 
-async function createUsers() {
+async function clear() {
   await prisma.organizationMembers.deleteMany({});
+  await prisma.members.deleteMany({});
+  await prisma.tag.deleteMany({});
+  await prisma.project.deleteMany({});
+  await prisma.organization.deleteMany({});
   await prisma.user.deleteMany({});
+}
 
+async function createUsers() {
   function gen(): Prisma.UserCreateManyInput {
     return {
       email: faker.internet.email(),
@@ -57,8 +63,6 @@ async function createUsers() {
 }
 
 async function createOrganization() {
-  await prisma.organization.deleteMany({});
-
   function gen(): Prisma.OrganizationCreateManyInput {
     return {
       name: faker.company.name(),
@@ -127,7 +131,6 @@ async function getPrimaryUserId() {
 }
 
 async function createOrganizationMembers() {
-  await prisma.organizationMembers.deleteMany({});
   const primaryOrgId = await getPrimaryOrgId();
   const primaryUserId = await getPrimaryUserId();
 
@@ -150,7 +153,6 @@ async function createOrganizationMembers() {
 }
 
 async function createProject() {
-  await prisma.project.deleteMany({});
   const primaryOrgId = await getPrimaryOrgId();
 
   function gen(): Prisma.ProjectCreateManyInput {
@@ -174,7 +176,6 @@ async function createProject() {
 }
 
 async function createTags() {
-  await prisma.tag.deleteMany({});
   const projectId = await getPrimaryOrgId();
 
   function gen(): Prisma.TagCreateManyInput {
@@ -193,7 +194,6 @@ async function createTags() {
 }
 
 async function createProjectMembers() {
-  await prisma.members.deleteMany({});
   const primaryOrgId = await getPrimaryOrgId();
   const primaryUserId = await getPrimaryUserId();
 
@@ -229,6 +229,7 @@ async function createProjectMembers() {
 }
 
 async function _do() {
+  await clear();
   await createUsers();
   await createOrganization();
   await createOrganizationMembers();
