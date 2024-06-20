@@ -14,7 +14,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "dev": "vite",
+    "dev": "tsx src/api.ts",
     "build": "rimraf dist && tsc && vite build",
     "preview": "vite preview",
     "https-preview": "serve dist",
@@ -28,8 +28,7 @@
     "test:e2e:ui": "playwright test --ui",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "seed": "tsx prisma/seed.ts",
-    "api": "tsx src/api.ts"
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -60,7 +59,6 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
-    "http-proxy-middleware": "^3.0.0",
     "is-mobile": "^4.0.0",
     "jsonwebtoken": "^9.0.2",
     "koa-zod-router": "^2.3.0",
@@ -85,7 +83,7 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.15.1",
     "vaul": "^0.9.1",
-    "viteser": "^0.0.1-beta.10",
+    "viteser": "^0.0.1-beta.11",
     "zod": "^3.23.8"
   },
   "devDependencies": {

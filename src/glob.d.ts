@@ -1,12 +1,6 @@
 import { Prisma, TeamRole, ProjectMemberRole } from '@prisma/client';
 import { InvitationStatus } from '.prisma/client';
 
-declare module 'koa2-connect' {
-  import type { Middleware } from 'koa';
-  // noinspection JSUnusedGlobalSymbols
-  export default function k2c(middleware: Middleware): Middleware;
-}
-
 export type ProjectPayload = Pick<Prisma.ProjectCreateInput, 'name' | 'cover' | 'id' | 'desc'>;
 
 export type TeamPayload = {

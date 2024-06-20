@@ -14,10 +14,7 @@ const isTest = env.NODE_ENV === 'test';
 export default defineConfig(() => {
   const plugins = [];
   if (!isTest) {
-    plugins.push(ViteserPlugin({
-      vitePort: 5173,
-      serverPort: 12000,
-    }))
+    plugins.push(ViteserPlugin({}))
   }
   return ({
     plugins: [
