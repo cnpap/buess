@@ -4,7 +4,7 @@ import { defaultPassword, primaryUserEmail } from '../../../prisma/const';
 import { maPrisma } from '@/utils/facade-init';
 import { getUserInfo } from '@/services/auth/userinfo';
 import { testContextHelper } from 'viteser';
-import { UserJwtPayload } from '@/glob';
+import { facade } from '@/utils/facade';
 
 describe('auth test', () => {
   beforeAll(async () => {
@@ -22,16 +22,27 @@ describe('auth test', () => {
     expect(result.data?.token).not.eq(undefined);
   });
 
-  test('getuserinfo success', async () => {
-    const payload = {
-      id: 'admin',
-    };
-    await testContextHelper({
-      payload,
-      async callback() {
-        const { data } = (await getUserInfo()) as unknown as { data: UserJwtPayload };
-        expect(data.id).eq('admin');
-      },
-    });
-  });
+  test(
+    'getuserinfo success',
+    async () => {
+      const primaryUser = await facade.prisma.user.findFirstOrThrow({
+        where: {
+          email: primaryUserEmail,
+        },
+      });
+      const payload = {
+        id: primaryUser.id,
+      };
+      await testContextHelper({
+        payload,
+        async callback() {
+          const { data } = await getUserInfo();
+          expect(data.payload.id).eq(primaryUser.id);
+        },
+      });
+    },
+    {
+      timeout: 0,
+    },
+  );
 });

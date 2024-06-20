@@ -3,8 +3,8 @@ import { context, getTokenByHeaders, makeMiddleware } from 'viteser';
 
 export async function signIned() {
   const ctx = context();
-  const token = getTokenByHeaders(ctx.headers);
   try {
+    const token = getTokenByHeaders(ctx.headers);
     await verifyToken(token);
   } catch (e) {
     return {
