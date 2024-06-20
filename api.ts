@@ -4,7 +4,7 @@ import k2c from 'koa2-connect/ts';
 import zodRouter from 'koa-zod-router';
 import { z } from 'zod';
 import { handleMiddleware } from 'viteser';
-import { maPrisma } from '@/utils/facade-init';
+import { maPrisma } from './src/utils/facade-init';
 import { createServer } from 'vite';
 
 maPrisma();
