@@ -14,7 +14,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "dev": "tsx api.ts",
+    "dev": "tsx node_modules/vite/bin/vite.js",
     "build": "rimraf dist && tsc && vite build",
     "preview": "vite preview",
     "https-preview": "serve dist",
@@ -61,8 +61,6 @@
     "date-fns": "^3.6.0",
     "is-mobile": "^4.0.0",
     "jsonwebtoken": "^9.0.2",
-    "koa-zod-router": "^2.3.0",
-    "koa2-connect": "^1.0.2",
     "koz": "^0.0.0",
     "lucide-react": "^0.383.0",
     "nanostores": "^0.10.3",
@@ -83,7 +81,7 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.15.1",
     "vaul": "^0.9.1",
-    "viteser": "^0.0.1-beta.11",
+    "viteser": "^0.0.1-beta.12",
     "zod": "^3.23.8"
   },
   "devDependencies": {
