@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-import { maPrisma } from '@/utils/facade-init';
+// @ts-ignore
+import { maPrisma } from './src/utils/facade-init';
 import * as path from 'path';
 import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
