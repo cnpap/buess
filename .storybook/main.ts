@@ -14,4 +14,9 @@ const config: StorybookConfig = {
     options: {},
   },
 };
+
+// @ts-ignore
+global.storybook = true
+
+// noinspection JSUnusedGlobalSymbols
 export default config;

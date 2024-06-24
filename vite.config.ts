@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { maPrisma } from '@/utils/facade-init';
 import * as path from 'path';
 import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
@@ -8,19 +5,31 @@ import { VitePWA } from 'vite-plugin-pwa';
 import manifest from './manifest.json';
 import {ViteserPlugin} from 'viteser'
 import Inspect from 'vite-plugin-inspect'
+import { PrismaClient } from '@prisma/client';
+
 const mode = process.env.NODE_ENV || 'development';
 const env = loadEnv(mode, process.cwd(), '');
 const isTest = env.NODE_ENV === 'test';
 
-maPrisma()
-
 // https://vitejs.dev/config/
 // noinspection JSUnusedGlobalSymbols
-export default defineConfig(() => {
+export default defineConfig(async () => {
   const plugins = [];
   if (!isTest) {
     plugins.push(ViteserPlugin())
   }
+  if (!isTest && !global.storybook) {
+    // noinspection JSStringConcatenationToES6Template
+    // @ts-ignore
+    const { facade } = await import('@/utils/facade');
+    facade.prisma = new PrismaClient();
+  } else {
+    // noinspection JSStringConcatenationToES6Template
+    // @ts-ignore
+    const { facade } = await import('./src/utils/facade');
+    facade.prisma = new PrismaClient();
+  }
+
   return ({
     plugins: [
       Inspect(),
