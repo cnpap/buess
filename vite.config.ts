@@ -18,7 +18,7 @@ export default defineConfig(async () => {
   if (!isTest) {
     plugins.push(ViteserPlugin())
   }
-  if (!isTest && !global.storybook) {
+  if (!isTest && !(global as unknown as {storybook: boolean}).storybook && process.env.NODE_ENV === 'development') {
     // noinspection JSStringConcatenationToES6Template
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error

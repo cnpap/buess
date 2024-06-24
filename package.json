@@ -15,7 +15,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "tsx node_modules/vite/bin/vite.js",
-    "build": "rimraf dist && tsc && vite build",
+    "build": "rimraf dist && npm run ts:check && vite build",
     "preview": "vite preview",
     "https-preview": "serve dist",
     "prepare": "husky install && cp -n env/.shared .env &",
