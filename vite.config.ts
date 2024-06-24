@@ -71,7 +71,9 @@ export default defineConfig(async () => {
           'node:util',
           'fs',
           'path',
-          'os'
+          'os',
+          'argon2',
+          '@prisma/client',
         ]
       }
     }
