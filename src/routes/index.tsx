@@ -9,6 +9,7 @@ import MainHome from '@/pages/main/home';
 import MainData from '@/pages/main/data';
 import MainTest from '@/pages/main/test';
 import MainCicd from '@/pages/main/cicd';
+import MainConf from '@/pages/main/conf';
 
 const RouteTemplate = () => {
   return (
@@ -21,6 +22,7 @@ const RouteTemplate = () => {
       </Route>
       <Route path="/main" element={<MainLayout />}>
         <Route path="/main/home" element={<MainHome />} />
+        <Route path="/main/conf" element={<MainConf />} />
         <Route path="/main/data" element={<MainData />} />
         <Route path="/main/test" element={<MainTest />} />
         <Route path="/main/cicd" element={<MainCicd />} />

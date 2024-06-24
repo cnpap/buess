@@ -1,14 +1,13 @@
 import { UserJwtPayload } from '@/glob';
 import { facade } from '@/utils/facade';
 import { genToken } from '@/services/func';
+import { signInedMiddleware } from '@/services/middlewares';
+import { useJwtPayload } from 'viteser';
 
 export async function getUserInfo() {
   'use server';
-  const { signInedMiddleware } = await import('@/services/middlewares');
 
   await signInedMiddleware();
-  const { useJwtPayload } = await import('viteser');
-
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [payload] = useJwtPayload<UserJwtPayload>();
 

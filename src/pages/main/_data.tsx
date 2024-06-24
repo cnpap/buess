@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, SquareUser, LifeBuoy, Grid2x2Check, Code2, Database } from 'lucide-react';
+import { Home, SquareUser, LifeBuoy, Grid2x2Check, Code2, Database, FileCog } from 'lucide-react';
 
 export interface Menu {
   // 要支持输入 className
@@ -18,6 +18,11 @@ export const topMenus: Menu[] = [
     label: 'data',
     path: '/main/data',
     icon: Database,
+  },
+  {
+    label: 'conf',
+    path: '/main/conf',
+    icon: FileCog,
   },
   {
     label: 'cicd',

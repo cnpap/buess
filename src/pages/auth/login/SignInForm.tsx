@@ -1,13 +1,14 @@
 import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from 'react-router-dom';
 import AutoForm from '@/components/ui/auto-form';
-import { formSchema, signIn } from '@/services/auth/sign-in';
+import { signIn } from '@/services/auth/sign-in';
 import { useState } from 'react';
 import { z } from 'zod';
 import { LoadingButton } from '@/components/ui/loading-button';
 import { toast } from 'react-toastify';
 import { useMount } from 'ahooks';
 import { preLoad } from '@/utils/pre-load';
+import { formSchema } from '@/services/auth/sign-in.f';
 
 function ChromeIcon() {
   return (
