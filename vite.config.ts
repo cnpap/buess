@@ -20,7 +20,7 @@ export default defineConfig(async () => {
   }
   if (!isTest && !global.storybook) {
     // noinspection JSStringConcatenationToES6Template
-    // @ts-ignore
+    // @ts-expect-error
     const { facade } = await import('@/utils/facade');
     facade.prisma = new PrismaClient();
   } else {
