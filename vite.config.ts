@@ -20,11 +20,13 @@ export default defineConfig(async () => {
   }
   if (!isTest && !global.storybook) {
     // noinspection JSStringConcatenationToES6Template
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     const { facade } = await import('@/utils/facade');
     facade.prisma = new PrismaClient();
   } else {
     // noinspection JSStringConcatenationToES6Template
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const { facade } = await import('./src/utils/facade');
     facade.prisma = new PrismaClient();
