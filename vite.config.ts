@@ -5,7 +5,6 @@ import { VitePWA } from 'vite-plugin-pwa';
 import manifest from './manifest.json';
 import {ViteserPlugin} from 'viteser'
 import Inspect from 'vite-plugin-inspect'
-import { PrismaClient } from '@prisma/client';
 
 const mode = process.env.NODE_ENV || 'development';
 const env = loadEnv(mode, process.cwd(), '');
@@ -17,19 +16,6 @@ export default defineConfig(async () => {
   const plugins = [];
   if (!isTest) {
     plugins.push(ViteserPlugin())
-  }
-  if (!isTest && !(global as unknown as {storybook: boolean}).storybook && process.env.NODE_ENV === 'development') {
-    // noinspection JSStringConcatenationToES6Template
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    const { facade } = await import('@/utils/facade');
-    facade.prisma = new PrismaClient();
-  } else {
-    // noinspection JSStringConcatenationToES6Template
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const { facade } = await import('./src/utils/facade');
-    facade.prisma = new PrismaClient();
   }
 
   return ({

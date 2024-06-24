@@ -16,7 +16,7 @@
   "scripts": {
     "dev": "tsx node_modules/vite/bin/vite.js",
     "build": "rimraf dist && npm run ts:check && vite build",
-    "preview": "vite preview",
+    "preview": "tsx node_modules/vite/bin/vite.js preview",
     "https-preview": "serve dist",
     "prepare": "husky install && cp -n env/.shared .env &",
     "prettier:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
@@ -82,7 +82,7 @@
     "tsx": "^4.15.1",
     "vaul": "^0.9.1",
     "vite-plugin-inspect": "^0.8.4",
-    "viteser": "^0.0.1-beta.14",
+    "viteser": "^0.0.1-beta.15",
     "zod": "^3.23.8"
   },
   "devDependencies": {

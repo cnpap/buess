@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import { facade } from '@/utils/facade';
 import { genToken } from '@/services/func';
 import { formSchema } from '@/services/auth/sign-in.f';
 import { verify } from 'argon2';
+import { maPrisma } from '@/utils/facade-init';
 
 const signInFailMessage = 'email or password is incorrect';
 
@@ -14,7 +14,7 @@ export async function signIn(values: z.infer<typeof formSchema>) {
   formSchema.parse(values);
 
   const { email, password } = values;
-  const user = await facade.prisma.user.findFirst({
+  const user = await maPrisma().user.findFirst({
     where: {
       email,
     },

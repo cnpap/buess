@@ -1,8 +1,8 @@
 import { UserJwtPayload } from '@/glob';
-import { facade } from '@/utils/facade';
 import { genToken } from '@/services/func';
 import { signInedMiddleware } from '@/services/middlewares';
 import { useJwtPayload } from 'viteser';
+import { maPrisma } from '@/utils/facade-init';
 
 export async function getUserInfo() {
   'use server';
@@ -11,7 +11,7 @@ export async function getUserInfo() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [payload] = useJwtPayload<UserJwtPayload>();
 
-  const user = await facade.prisma.user.findFirstOrThrow({
+  const user = await maPrisma().user.findFirstOrThrow({
     where: {
       id: payload.id,
     },
