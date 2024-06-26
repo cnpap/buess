@@ -33,3 +33,4 @@ dist-vs-api
 *storybook.log
 
 demo.*
+.vercel
