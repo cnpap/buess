@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 test.describe('test theme', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/auth/sign-in');
+    await page.goto('/auth');
     await page.waitForLoadState('networkidle');
   });
 

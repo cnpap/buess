@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Bell, CircleUser, Package2, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -11,6 +10,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useLogto } from '@logto/react';
+import { useMount } from 'ahooks';
+import { BASE_URL, RESOURCE_BUESS } from '@/const';
 
 function HeaderLeft() {
   return (
@@ -28,11 +30,20 @@ function HeaderLeft() {
 }
 
 function HeaderRight() {
-  const navigate = useNavigate();
+  const { signOut, fetchUserInfo, getAccessTokenClaims } = useLogto();
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/auth/sign-in');
+    localStorage.clear();
+    // noinspection JSIgnoredPromiseFromCall
+    signOut(`${BASE_URL}/auth`);
   };
+  useMount(() => {
+    getAccessTokenClaims(RESOURCE_BUESS).then((claims) => {
+      console.log('claims', claims);
+    });
+    fetchUserInfo().then((userInfo) => {
+      console.log('userInfo', userInfo);
+    });
+  });
   return (
     <header className="flex h-14 items-center gap-4 px-4 lg:h-[60px] lg:px-6">
       <div className="w-full flex-1">

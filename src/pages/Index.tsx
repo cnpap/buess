@@ -4,7 +4,7 @@ import { useMount } from 'ahooks';
 function Index() {
   const navigate = useNavigate();
   useMount(() => {
-    navigate('/auth/sign-in');
+    navigate('/auth');
   });
   return <div></div>;
 }

@@ -1,6 +1,21 @@
-import { Outlet } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { useLogto } from '@logto/react';
+import { useMount } from 'ahooks';
+import { BASE_URL } from '@/const';
 
 export default function AuthLayout() {
+  const navigate = useNavigate();
+  const { signIn, isAuthenticated, getIdTokenClaims } = useLogto();
+  useMount(() => {
+    if (isAuthenticated) {
+      getIdTokenClaims().then((claims) => {
+        localStorage.setItem('u', JSON.stringify(claims));
+        navigate('/main/home');
+      });
+    }
+  });
+
   // noinspection HtmlUnknownTarget
   return (
     <div
@@ -16,7 +31,7 @@ export default function AuthLayout() {
           <div className={'flex justify-center'}>
             <img src={'/logo.png'} style={{ width: '200px' }} alt="logo" />
           </div>
-          <Outlet />
+          <Button onClick={() => signIn(`${BASE_URL}/callback`)}>Sign In</Button>
         </div>
       </div>
       <div
