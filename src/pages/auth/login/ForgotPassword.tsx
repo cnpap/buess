@@ -21,10 +21,10 @@ export default function ForgotPassword() {
       <div className="grid gap-4">
         <AutoForm formSchema={formSchema}>
           <Link to="/auth/sign-in" className="ml-auto inline-block text-sm underline">
-            去登录?
+            go to login?
           </Link>
           <Button type="submit" className="w-full">
-            发送重置连接
+            send registration link
           </Button>
         </AutoForm>
       </div>
