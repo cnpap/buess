@@ -85,7 +85,7 @@
     "tsx": "^4.15.1",
     "vaul": "^0.9.1",
     "vite-plugin-inspect": "^0.8.4",
-    "viteser": "^0.0.1-beta.23",
+    "viteser": "^0.0.1-beta.24",
     "zod": "^3.23.8"
   },
   "devDependencies": {

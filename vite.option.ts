@@ -29,11 +29,8 @@ export const build:BuildOptions = {
       'path',
       'os',
       'argon2',
-      '@prisma/client',
-      'prisma',
       'node:process',
       'crypto',
-      'viteser',
       'stream'
     ]
   }
