@@ -10,6 +10,7 @@ const env = process.env;
 const envVariables = Object.keys(env)
   .filter((key) => {
     if (key.startsWith('VITE_')) {
+      console.log(`Exporting ${key}`);
       return true;
     }
   })
