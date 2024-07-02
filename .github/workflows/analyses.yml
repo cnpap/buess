@@ -5,18 +5,20 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+
+env:
+  VITE_MONGODB_URL: ${{ secrets.VITE_MONGODB_URL }}
+  VITE_LOGTO_APP_ID: ${{ secrets.VITE_LOGTO_APP_ID }}
+  VITE_LOGTO_APP_ID_M2M: ${{ secrets.VITE_LOGTO_APP_ID_M2M }}
+  VITE_LOGTO_APP_ID_M2M_SECRET: ${{ secrets.VITE_LOGTO_APP_ID_M2M_SECRET }}
+  VITE_RESOURCE_BUESS: ${{ secrets.VITE_RESOURCE_BUESS }}
+  VITE_BASE_URL: ${{ secrets.VITE_BASE_URL }}
+  VITE_LOGTO_SERVE: ${{ secrets.VITE_LOGTO_SERVE }}
+
 jobs:
   install:
     runs-on: ubuntu-latest
     environment: 'development'
-    env:
-      VITE_MONGODB_URL: ${{ secrets.VITE_MONGODB_URL }}
-      VITE_LOGTO_APP_ID: ${{ secrets.VITE_LOGTO_APP_ID }}
-      VITE_LOGTO_APP_ID_M2M: ${{ secrets.VITE_LOGTO_APP_ID_M2M }}
-      VITE_LOGTO_APP_ID_M2M_SECRET: ${{ secrets.VITE_LOGTO_APP_ID_M2M_SECRET }}
-      VITE_RESOURCE_BUESS: ${{ secrets.VITE_RESOURCE_BUESS }}
-      VITE_BASE_URL: ${{ secrets.VITE_BASE_URL }}
-      VITE_LOGTO_SERVE: ${{ secrets.VITE_LOGTO_SERVE }}
     steps:
       - uses: actions/checkout@v2
       - name: Install Dependencies
@@ -58,6 +60,7 @@ jobs:
   typescript:
     needs: install
     runs-on: ubuntu-latest
+    environment: 'development'
     steps:
       - uses: actions/checkout@v2
       - name: Cached node modules
@@ -71,6 +74,7 @@ jobs:
   unit_tests:
     needs: install
     runs-on: ubuntu-latest
+    environment: 'development'
     steps:
       - uses: actions/checkout@v2
       - name: Cached node modules
