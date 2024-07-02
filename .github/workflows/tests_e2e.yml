@@ -18,6 +18,8 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Generate type env
+        run: npm run type:env
       - name: Run Playwright tests
         env:
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
