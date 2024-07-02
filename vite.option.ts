@@ -5,7 +5,7 @@ export const resolve: ResolveOptions & {
   alias?: AliasOptions;
 } = {
   alias: {
-    '@': path.resolve(__dirname, './src'),
+    '@/': new URL('./src/', import.meta.url).pathname,
   },
 }
 export const test = {
