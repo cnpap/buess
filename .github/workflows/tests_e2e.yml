@@ -9,6 +9,12 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     environment: 'development'
+    env:
+      VITE_MONGODB_URL: ${{ secrets.VITE_MONGODB_URL }}
+      VITE_LOGTO_APP_ID: ${{ secrets.VITE_LOGTO_APP_ID }}
+      VIET_LOGTO_APP_ID_M2M: ${{ secrets.VIET_LOGTO_APP_ID_M2M }}
+      VIET_LOGTO_APP_ID_M2M_SECRET: ${{ secrets.VIET_LOGTO_APP_ID_M2M_SECRET }}
+      VITE_RESOURCE_BUESS: ${{ secrets.VITE_RESOURCE_BUESS }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -21,8 +27,6 @@ jobs:
       - name: Generate type env
         run: npm run type:env
       - name: Run Playwright tests
-        env:
-          MONGODB_URL: ${{ secrets.MONGODB_URL }}
         run: npm run test:e2e
       - uses: actions/upload-artifact@v3
         if: always()
