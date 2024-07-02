@@ -9,7 +9,7 @@ dotenv.config();
 const env = process.env;
 const envVariables = Object.keys(env)
   .filter((key) => {
-    if (key.startsWith('VITE_')) {
+    if (key.startsWith('VITE_') || ['MONGODB_URL'].includes(key)) {
       console.log(`Exporting ${key}`);
       return true;
     }
