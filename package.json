@@ -15,7 +15,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "tsx node_modules/vite/bin/vite.js",
-    "build": "rimraf dist && npm run ts:check && vite build",
+    "build": "rimraf dist && npm run type:env && npm run ts:check && vite build",
     "preview": "tsx node_modules/vite/bin/vite.js preview",
     "https-preview": "serve dist",
     "prepare": "husky install && cp -n env/.shared .env &",
@@ -29,6 +29,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "seed": "tsx prisma/seed.ts",
+    "type:env": "tsx src/utils/typeenv.ts",
     "vercel": "vercel dev"
   },
   "dependencies": {

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useLogto } from '@logto/react';
 import { useMount } from 'ahooks';
-import { BASE_URL } from '@/const';
+import { VITE_BASE_URL } from '@/const';
 
 export default function AuthLayout() {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ export default function AuthLayout() {
           <div className={'flex justify-center'}>
             <img src={'/logo.png'} style={{ width: '200px' }} alt="logo" />
           </div>
-          <Button onClick={() => signIn(`${BASE_URL}/callback`)}>Sign In</Button>
+          <Button onClick={() => signIn(`${VITE_BASE_URL}/callback`)}>Sign In</Button>
         </div>
       </div>
       <div

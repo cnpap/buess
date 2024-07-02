@@ -4,14 +4,14 @@ import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from '@/components/theme-provider';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { LogtoConfig, LogtoProvider } from '@logto/react';
-import { LOGTO_APP_ID, LOGTO_SERVE, RESOURCE_BUESS } from '@/const';
+import { VITE_LOGTO_APP_ID, VITE_LOGTO_SERVE, VITE_RESOURCE_BUESS } from '@/const';
 
 const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container);
 const config: LogtoConfig = {
-  endpoint: LOGTO_SERVE,
-  appId: LOGTO_APP_ID,
-  resources: [RESOURCE_BUESS],
+  endpoint: VITE_LOGTO_SERVE,
+  appId: VITE_LOGTO_APP_ID,
+  resources: [VITE_RESOURCE_BUESS],
   scopes: [],
 };
 

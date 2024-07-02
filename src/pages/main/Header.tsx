@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useLogto } from '@logto/react';
 import { useMount } from 'ahooks';
-import { BASE_URL, RESOURCE_BUESS } from '@/const';
+import { VITE_BASE_URL, VITE_RESOURCE_BUESS } from '@/const';
 
 function HeaderLeft() {
   return (
@@ -34,10 +34,10 @@ function HeaderRight() {
   const handleLogout = () => {
     localStorage.clear();
     // noinspection JSIgnoredPromiseFromCall
-    signOut(`${BASE_URL}/auth`);
+    signOut(`${VITE_BASE_URL}/auth`);
   };
   useMount(() => {
-    getAccessTokenClaims(RESOURCE_BUESS).then((claims) => {
+    getAccessTokenClaims(VITE_RESOURCE_BUESS).then((claims) => {
       console.log('claims', claims);
     });
     fetchUserInfo().then((userInfo) => {
