@@ -34,3 +34,5 @@ dist-vs-api
 
 demo.*
 .vercel
+
+src/const.ts
