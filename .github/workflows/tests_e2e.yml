@@ -17,6 +17,7 @@ jobs:
       VITE_RESOURCE_BUESS: ${{ secrets.VITE_RESOURCE_BUESS }}
       VITE_BASE_URL: ${{ secrets.VITE_BASE_URL }}
       VITE_LOGTO_SERVE: ${{ secrets.VITE_LOGTO_SERVE }}
+      MONGODB_URL: ${{ secrets.MONGODB_URL }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
