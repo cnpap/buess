@@ -58,6 +58,7 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "ahooks": "^3.8.0",
     "argon2": "^0.40.3",
+    "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",

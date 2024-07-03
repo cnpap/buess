@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react';
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, loadEnv, Plugin } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import manifest from './manifest.json';
 import {ViteserPlugin} from 'viteser'
@@ -18,7 +18,9 @@ export default defineConfig(async () => {
     Inspect(),
   ];
   if (!isTest) {
-    plugins.push(ViteserPlugin() as Plugin);
+    plugins.push(ViteserPlugin({
+      fetchTool: 'axios'
+    }) as Plugin);
   }
 
   return ({
