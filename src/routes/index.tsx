@@ -15,13 +15,12 @@ const RouteTemplate = () => {
       <Route path="/" element={<Index />} />
       <Route path="/callback" element={<AuthCallback />} />
       <Route path="/auth" element={<AuthLayout />}></Route>
-      <Route path="/main" element={<MainLayout />}>
-        <Route path="/main/home" element={<MainHome />} />
-        <Route path="/main/conf" element={<MainConf />} />
-        <Route path="/main/data" element={<MainData />} />
-        <Route path="/main/test" element={<MainTest />} />
-        <Route path="/main/cicd" element={<MainCicd />} />
-      </Route>
+      <Route path="/main/home" element={<MainHome />} />
+      <Route path="/main/conf" element={<MainConf />} />
+      <Route path="/main/data" element={<MainData />} />
+      <Route path="/main/test" element={<MainTest />} />
+      <Route path="/main/cicd" element={<MainCicd />} />
+      <Route path="/main" element={<MainLayout />} />
     </Routes>
   );
 };

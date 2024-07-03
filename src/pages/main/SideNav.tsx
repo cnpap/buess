@@ -7,15 +7,11 @@ import { cn } from '@/lib/utils';
 const StyledFullWidthNav = styled('nav')`
   & > button {
     width: 100%;
-    height: 3.5rem;
-    padding: 0.75rem 0.5rem 0.5rem 0.5rem;
+    height: 4rem;
+    padding: 2.5rem 0.5rem 2.5rem 0.5rem;
 
     & > div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      font-size: 0.75rem;
+      font-size: 1rem;
     }
   }
 `;
@@ -32,13 +28,15 @@ export default function SideNav({ data }: { data: Menu[] }) {
           size="icon"
           onClick={() => navigate(path as string)}
           className={cn(
-            'rounded-lg',
+            'rounded-lg border border-transparent',
             location.pathname.startsWith(path as string) &&
               'bg-primary text-white hover:bg-primary hover:text-white',
+            !location.pathname.startsWith(path as string) &&
+              'hover:bg-white dark:hover:bg-gray-900 hover:border-gray-400 dark:hover:border-gray-700',
           )}
           aria-label={label}
         >
-          <div>
+          <div className={'flex flex-col gap-2 items-center'}>
             <Icon className="size-5" />
             <div>{label}</div>
           </div>

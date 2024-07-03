@@ -2,6 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  /*zoom: 135%;*/
+}
+
+@layer components {
+  .rainbow-border {
+    position: relative;
+    padding: 1rem;
+    z-index: 0;
+  }
+
+  .rainbow-border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    padding: 0.5px; /* 边框宽度 */
+    background: linear-gradient(45deg, blue, indigo, violet);
+    /*noinspection CssInvalidPropertyValue,CssInvalidFunction*/
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    z-index: -1;
+  }
+}
+
 :root {
   --header-height: 3.5rem; /* 默认 h-14 是 3.5rem */
 }
@@ -97,6 +128,7 @@ body * {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
