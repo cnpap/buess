@@ -8,6 +8,7 @@ import { useTheme } from './components/theme-provider';
 import { useHotkeys } from 'react-hotkeys-hook';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { useMount } from 'ahooks';
 
 export function useToggleEvent() {
   const { setTheme, theme } = useTheme();
@@ -17,6 +18,17 @@ export function useToggleEvent() {
     } else {
       setTheme('light');
     }
+    // 通过发送事件来切换主题
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    const channel = new BroadcastChannel('theme-change');
+    channel.postMessage(newTheme);
+  });
+
+  useMount(() => {
+    const channel = new BroadcastChannel('theme-change');
+    channel.onmessage = (e) => {
+      setTheme(e.data);
+    };
   });
 }
 
