@@ -2,9 +2,9 @@ name: analyses
 
 on:
   push:
-    branches: [main, master]
+    branches: [main, master, buess]
   pull_request:
-    branches: [main, master]
+    branches: [main, master, buess]
 
 env:
   VITE_LOGTO_APP_ID: ${{ secrets.VITE_LOGTO_APP_ID }}

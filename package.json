@@ -29,6 +29,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "seed": "tsx prisma/seed.ts",
+    "seed:logto": "tsx prisma/seed-logto.ts",
     "type:env": "tsx src/utils/typeenv.ts",
     "vercel": "vercel dev"
   },
