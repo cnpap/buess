@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 export default function AuthCallback() {
   const navigate = useNavigate();
   const { isLoading } = useHandleSignInCallback(() => {
-    navigate('/main/home');
+    navigate('/main');
   });
   if (!isLoading) {
     return null;

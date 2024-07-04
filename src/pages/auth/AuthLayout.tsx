@@ -11,7 +11,7 @@ export default function AuthLayout() {
     if (isAuthenticated) {
       getIdTokenClaims().then((claims) => {
         localStorage.setItem('u', JSON.stringify(claims));
-        navigate('/main/home');
+        navigate('/main');
       });
     }
   });
