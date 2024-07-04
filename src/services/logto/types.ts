@@ -83,3 +83,38 @@ export interface Resource {
   id: string;
   name: string;
 }
+
+export interface ApplicationCreateRequestData {
+  name: string;
+  description: string;
+  type: string;
+  oidcClientMetadata: ApplicationCreateRequestOidcClientMetadata;
+  customClientMetadata?: ApplicationCreateRequestCustomClientMetadata;
+  isThirdParty?: boolean;
+  protectedAppMetadata?: ApplicationCreateRequestProtectedAppMetadata;
+}
+
+export interface ApplicationCreateRequestOidcClientMetadata {
+  redirectUris: ApplicationCreateRequestRedirectUri[];
+  postLogoutRedirectUris: string[];
+  backchannelLogoutUri?: string;
+  backchannelLogoutSessionRequired?: boolean;
+  logoUri?: string;
+}
+
+export interface ApplicationCreateRequestRedirectUri {}
+
+export interface ApplicationCreateRequestCustomClientMetadata {
+  corsAllowedOrigins: string[];
+  idTokenTtl: number;
+  refreshTokenTtl: number;
+  refreshTokenTtlInDays: number;
+  tenantId: string;
+  alwaysIssueRefreshToken: boolean;
+  rotateRefreshToken: boolean;
+}
+
+export interface ApplicationCreateRequestProtectedAppMetadata {
+  subDomain: string;
+  origin: string;
+}

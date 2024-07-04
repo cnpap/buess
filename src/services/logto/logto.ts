@@ -1,5 +1,5 @@
 import { VITE_LOGTO_APP_ID_M2M, VITE_LOGTO_APP_ID_M2M_SECRET, VITE_LOGTO_SERVE } from '@/const';
-import { LogtoResource } from '@/services/logto/types';
+import { ApplicationCreateRequestData, LogtoResource } from '@/services/logto/types';
 
 let tenant = 'default';
 
@@ -104,6 +104,15 @@ export const fetchApplications = async () => {
   });
 };
 
+export const createApplication = async (application: ApplicationCreateRequestData) => {
+  await throttleFreshToken();
+  return fetchLogto({
+    method: 'POST',
+    path: '/api/applications',
+    body: application,
+  });
+};
+
 export const createResource = async (resource: LogtoResource) => {
   await throttleFreshToken();
   return fetchLogto({
@@ -166,6 +175,7 @@ export const createOrganizationRole = async (role: { name: string; description: 
   });
 };
 
+// noinspection JSUnusedGlobalSymbols
 export const deleteOrganizationScope = async (id: string) => {
   await throttleFreshToken();
   return fetchLogto({

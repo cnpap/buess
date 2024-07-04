@@ -1,9 +1,9 @@
 import {
-  asyncOrganizationRoleScopes,
+  asyncOrganizationRoleScopes, createApplication,
   createOrganizationRole,
   createOrganizationScopes,
   createResource,
-  defaultResource, deleteOrganizationRole, fetchOrganizationRoles,
+  defaultResource, deleteOrganizationRole, fetchApplications, fetchOrganizationRoles,
   fetchOrganizationScopes,
   fetchResources,
 } from '../src/services/logto/logto';
@@ -13,6 +13,7 @@ import {
   OrganizationScopesResponseData,
 } from '../src/services/logto/types';
 import { ORIGINATION_ROLES, PERMISSIONS } from '../src/services/data/permission';
+import { VITE_BASE_URL } from '../src/const';
 
 async function throwOvertimeError(errMessage: string, response: Response) {
   if (response.status > 299) {
@@ -133,6 +134,28 @@ async function originationRoles() {
   }
 }
 
+async function application() {
+  const allApplications = await fetchApplications();
+  await throwOvertimeError('fetch applications failed', allApplications);
+  const applications = await allApplications.json();
+  for (const app of applications) {
+    if (app.name === 'buess') {
+      return;
+    }
+  }
+
+  const response = await createApplication({
+    name: 'buess',
+    description: 'buess',
+    type: 'SPA',
+    oidcClientMetadata: {
+      redirectUris: [`${VITE_BASE_URL}/callback`],
+      postLogoutRedirectUris: [`${VITE_BASE_URL}/auth`],
+    }
+  });
+  await throwOvertimeError('create application failed', response);
+}
+
 async function create() {
   // noinspection JSIgnoredPromiseFromCall
   await firstResource();
@@ -140,6 +163,8 @@ async function create() {
   await organizationScopes();
   // noinspection JSIgnoredPromiseFromCall
   await originationRoles();
+  // noinspection JSIgnoredPromiseFromCall
+  await application();
 }
 
 // noinspection JSIgnoredPromiseFromCall
