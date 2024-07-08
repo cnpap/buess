@@ -96,4 +96,4 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Unit tests
-        run: npm run type:env && npm run seed && npm run test:unit
+        run: npm run type:env && npm run test:unit
