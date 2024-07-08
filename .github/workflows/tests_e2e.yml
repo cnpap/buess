@@ -1,25 +1,18 @@
 name: e2e tests
+
 on:
   push:
     branches: [main, master, buess]
   pull_request:
     branches: [main, master, buess]
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     environment: 'development'
-    env:
-      VITE_MONGODB_URL: ${{ secrets.VITE_MONGODB_URL }}
-      VITE_LOGTO_APP_ID: ${{ secrets.VITE_LOGTO_APP_ID }}
-      VITE_LOGTO_APP_ID_M2M: ${{ secrets.VITE_LOGTO_APP_ID_M2M }}
-      VITE_LOGTO_APP_ID_M2M_SECRET: ${{ secrets.VITE_LOGTO_APP_ID_M2M_SECRET }}
-      VITE_RESOURCE_BUESS: ${{ secrets.VITE_RESOURCE_BUESS }}
-      VITE_BASE_URL: ${{ secrets.VITE_BASE_URL }}
-      VITE_LOGTO_SERVE: ${{ secrets.VITE_LOGTO_SERVE }}
-      MONGODB_URL: ${{ secrets.MONGODB_URL }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           node-version: 20
