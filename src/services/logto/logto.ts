@@ -1,5 +1,5 @@
 import { VITE_LOGTO_APP_ID_M2M, VITE_LOGTO_APP_ID_M2M_SECRET, VITE_LOGTO_SERVE } from '@/const';
-import { ApplicationCreateRequestData, LogtoResource } from '@/services/logto/types';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 let tenant = 'default';
 
@@ -74,132 +74,28 @@ const throttle = (fn: () => Promise<void>, delay: number) => {
 };
 
 // freshToken 节流
-const throttleFreshToken = throttle(freshToken, 1000);
+export const throttleFreshToken = throttle(freshToken, 1000);
 
-interface FetchLogtoOptions {
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-  path: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  body?: Record<string, any>;
-}
-
-export const fetchLogto = async (options: FetchLogtoOptions) => {
-  await throttleFreshToken();
-  return await fetch(`${VITE_LOGTO_SERVE}${options.path}`, {
-    method: options.method,
-    headers: {
-      // json
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${lastAccessToken}`,
-    },
-    body: options.body ? JSON.stringify(options.body) : undefined,
-  });
-};
-
-export const fetchApplications = async () => {
-  await throttleFreshToken();
-  return fetchLogto({
-    method: 'GET',
-    path: '/api/applications',
-  });
-};
-
-export const createApplication = async (application: ApplicationCreateRequestData) => {
-  await throttleFreshToken();
-  return fetchLogto({
-    method: 'POST',
-    path: '/api/applications',
-    body: application,
-  });
-};
-
-export const createResource = async (resource: LogtoResource) => {
-  await throttleFreshToken();
-  return fetchLogto({
-    method: 'POST',
-    path: '/api/resources',
-    body: resource,
-  });
-};
-
-export const fetchResources = async () => {
-  await throttleFreshToken();
-  return fetchLogto({
-    method: 'GET',
-    path: '/api/resources',
-  });
-};
-
-export const defaultResource = async (id: string) => {
-  await throttleFreshToken();
-  return fetchLogto({
-    method: 'PATCH',
-    path: `/api/resources/${id}/is-default`,
-    body: {
-      isDefault: true,
-    },
-  });
-};
-
-export const fetchOrganizationScopes = async () => {
-  await throttleFreshToken();
-  return fetchLogto({
-    method: 'GET',
-    path: '/api/organization-scopes',
-  });
-};
-
-export const createOrganizationScopes = async (scope: { name: string; description: string }) => {
-  await throttleFreshToken();
-  return fetchLogto({
-    method: 'POST',
-    path: '/api/organization-scopes',
-    body: scope,
-  });
-};
-
-export const fetchOrganizationRoles = async () => {
-  await throttleFreshToken();
-  return fetchLogto({
-    method: 'GET',
-    path: '/api/organization-roles',
-  });
-};
-
-export const createOrganizationRole = async (role: { name: string; description: string }) => {
-  await throttleFreshToken();
-  return fetchLogto({
-    method: 'POST',
-    path: '/api/organization-roles',
-    body: role,
-  });
-};
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 // noinspection JSUnusedGlobalSymbols
-export const deleteOrganizationScope = async (id: string) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const fetchLogto = async <T = any, R = AxiosResponse<T>, D = any>(
+  options: AxiosRequestConfig<D>,
+): Promise<R> => {
+  options.baseURL = VITE_LOGTO_SERVE;
+  if (options.headers) {
+    options.headers = {
+      ...options.headers,
+      Authorization: `Bearer ${lastAccessToken}`,
+    };
+  } else {
+    options.headers = {
+      Authorization: `Bearer ${lastAccessToken}`,
+    };
+  }
   await throttleFreshToken();
-  return fetchLogto({
-    method: 'DELETE',
-    path: `/api/organization-scopes/${id}`,
-  });
-};
-
-export const deleteOrganizationRole = async (id: string) => {
-  await throttleFreshToken();
-  return fetchLogto({
-    method: 'DELETE',
-    path: `/api/organization-roles/${id}`,
-  });
-};
-
-export const asyncOrganizationRoleScopes = async (roleId: string, scopeIds: string[]) => {
-  await throttleFreshToken();
-  return fetchLogto({
-    method: 'POST',
-    path: `/api/organization-roles/${roleId}/scopes`,
-    body: {
-      organizationScopeIds: scopeIds,
-    },
+  return axios.request<T, R, D>({
+    ...options,
   });
 };
 

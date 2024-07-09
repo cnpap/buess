@@ -1,6 +1,5 @@
 import { expect, describe, it } from 'vitest';
-import { fetchAccessToken, fetchApplications } from '@/services/logto/logto';
-import { LogtoApplication } from '@/services/logto/types';
+import { fetchAccessToken } from '@/services/logto/logto';
 
 describe('test access service', () => {
   it('test fresh token', async () => {
@@ -13,15 +12,4 @@ describe('test access service', () => {
     const json = await accessTokenRes.json();
     expect(json.access_token).toBeDefined();
   });
-
-  it('test fetch applications', async () => {
-    const applicationsRes = await fetchApplications();
-    const status = applicationsRes.status;
-    if (status !== 200) {
-      console.error(await applicationsRes.text());
-    }
-    expect(status).toBe(200);
-    const json = (await applicationsRes.json()) as LogtoApplication[];
-    expect(json.length > 0).toBe(true);
-  }, 0);
 });
