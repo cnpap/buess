@@ -1,6 +1,7 @@
 {
   "ignorePatterns": [
-    "src/components/ui"
+    "src/components/ui",
+    "src/components/*.svelte"
   ],
   "env": {
     "browser": true,

@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useLayoutEffect, useRef } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import RouteTemplate from '@/routes';
 import '@/globals.css';
@@ -9,6 +9,7 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { useMount } from 'ahooks';
+import Hello from '@/components/hello.svelte';
 
 export function useToggleEvent() {
   const { setTheme, theme } = useTheme();
@@ -34,9 +35,19 @@ export function useToggleEvent() {
 
 function App() {
   useToggleEvent();
+  const svelteRef = useRef();
+  useLayoutEffect(() => {
+    while (svelteRef.current?.firstChild) {
+      svelteRef.current?.firstChild?.remove();
+    }
+    new Hello({
+      target: svelteRef.current,
+    });
+  }, []);
   return (
     <Fragment>
       <BrowserRouter>
+        <div ref={svelteRef}></div>
         <RouteTemplate />
       </BrowserRouter>
       <ToastContainer />
