@@ -1,3 +1,3 @@
-import Meta from './Meta';
+import Meta from './meta';
 
 export default Meta;

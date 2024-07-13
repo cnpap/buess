@@ -1,6 +1,6 @@
 import type { Meta } from '@storybook/react';
 import RouteTemplate from '@/routes';
-import Aside from '@/pages/main/Aside';
+import Aside from '@/components/layout/aside';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {

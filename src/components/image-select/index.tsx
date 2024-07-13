@@ -6,18 +6,16 @@ interface ImageSelectProps {
   onChange?: (value: string) => void;
 }
 
-import { createClient } from 'pexels';
 import { useState } from 'react';
 import { useMount } from 'ahooks';
 import { ApiRandomImageResponse } from '@/components/image-select/type';
-
-const client = createClient('lUkRLlEi0XiVZnwf0YqGNV6gCxs794pNsdjz7sZZnpaLT77pi7frsKBL');
+import { pexelsClient } from '@/utils/api-client';
 
 export function ImageSelect(props: ImageSelectProps = { name: 'product' }) {
   const [images, setImages] = useState<string[]>([]);
   const [currentImage, setCurrentImage] = useState<string | undefined>('');
   useMount(() => {
-    client.photos.curated({ per_page: 3 }).then((photos) => {
+    pexelsClient.photos.curated({ per_page: 3 }).then((photos) => {
       const res = photos as unknown as ApiRandomImageResponse;
       setImages(res.photos.map((p) => p.src.original));
       setCurrentImage(res.photos[0].src.original);

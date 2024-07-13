@@ -12,7 +12,7 @@ import {
 import { useLogto } from '@logto/react';
 import { useMount } from 'ahooks';
 import { VITE_BASE_URL, VITE_RESOURCE_BUESS } from '@/const';
-import { HeaderTabs } from '@/pages/main/HeaderTabs';
+import { HeaderTabs } from '@/components/layout/header-tabs';
 
 function HeaderLeft() {
   return (

@@ -1,3 +1,18 @@
+const {
+  default: flattenColorPalette,
+} = require("tailwindcss/lib/util/flattenColorPalette");
+
+function addVariablesForColors({ addBase, theme }) {
+  let allColors = flattenColorPalette(theme("colors"));
+  let newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+
+  addBase({
+    ":root": newVars,
+  });
+}
+
 /* eslint-disable no-undef */
 // noinspection ES6ConvertRequireIntoImport
 /** @type {import('tailwindcss').Config} */
@@ -11,6 +26,15 @@ module.exports = {
   ],
   prefix: "",
   theme: {
+    animation: {
+      move: "move 5s linear infinite",
+    },
+    keyframes: {
+      move: {
+        "0%": { transform: "translateX(-200px)" },
+        "100%": { transform: "translateX(200px)" },
+      },
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -75,5 +99,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), addVariablesForColors],
 }

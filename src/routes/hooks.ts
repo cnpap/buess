@@ -28,19 +28,33 @@ export function useInitRouteIframes() {
   });
 }
 
-export function useRouteIframes() {
+export function handleRouteIframes() {
   const pushRouteIframe = (routeIframe: RouteIframe) => {
     const routeIframes = $routeIframesAtom.get();
+    let isExist = false;
     for (let i = 0; i < routeIframes.length; i++) {
-      if (i !== routeIframes.length - 1) {
+      if (routeIframe.src === routeIframes[i].src) {
+        isExist = true;
+        if (routeIframes[i].current) {
+          break;
+        }
+        routeIframe.isLoaded = true;
+        routeIframes[i].current = true;
+      } else {
         routeIframes[i].current = false;
       }
     }
-    routeIframes.push(routeIframe);
-    routeIframe.isLoaded = true;
-    routeIframe.current = true;
-    $routeIframesAtom.set(routeIframes);
-    localStorage.setItem('route:iframes', JSON.stringify(routeIframes));
+
+    if (isExist) {
+      $routeIframesAtom.set(routeIframes);
+      localStorage.setItem('route:iframes', JSON.stringify(routeIframes));
+      return;
+    } else {
+      routeIframe.isLoaded = true;
+      routeIframes.push(routeIframe);
+      $routeIframesAtom.set(routeIframes);
+      localStorage.setItem('route:iframes', JSON.stringify(routeIframes));
+    }
   };
 
   const closeRouteIframe = (key: string) => {

@@ -1,5 +1,5 @@
-import Aside from '@/pages/main/Aside';
-import Header from '@/pages/main/Header';
+import Aside from '@/components/layout/aside';
+import Header from '@/components/layout/header';
 import { useStore } from '@nanostores/react';
 import { $routeIframesAtom } from '@/routes/store';
 import { useSearchParams } from 'react-router-dom';

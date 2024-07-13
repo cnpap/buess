@@ -1,32 +1,34 @@
-import { Prisma, TeamRole, ProjectMemberRole } from '@prisma/client';
-import { InvitationStatus } from '.prisma/client';
-
-export type ProjectPayload = Pick<Prisma.ProjectCreateInput, 'name' | 'cover' | 'id' | 'desc'>;
-
-export type TeamPayload = {
+export type OrganizationPayload = {
   lock?: boolean;
-  role: TeamRole;
-  status: InvitationStatus;
-  projects: ProjectPayload[];
-} & Pick<Prisma.TeamCreateInput, 'name' | 'cover' | 'id'>;
-
-export interface UserJwtPayload {
-  /**
-   * 用户表 id
-   */
   id: string;
-  /**
-   * 所有团队
-   */
-  teams: TeamPayload[];
-  /**
-   * 当前锁定项目
-   */
-  project: {
-    id: string;
-    member: ProjectMemberRole;
+  name: string;
+  custom_data: {
+    coverImage?: string;
   };
+  created_at: string;
+  description: string | null;
+  roles: {
+    id: string;
+    name: string;
+  }[];
+};
+
+export interface UserPayload {
+  organizations: OrganizationPayload[];
+  jti: string;
+  // 用户 ID
+  sub: string;
+  iat: number;
+  exp: number;
+  scope: string;
+  client_id: string;
+  iss: string;
+  aud: string;
 }
+
+export type Required<T> = {
+  [P in keyof T]-?: T[P];
+};
 
 // src/global.d.ts
 

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Button } from '@/components/ui/button';
-import { Menu } from '@/pages/main/_data';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Menu } from '@/components/layout/_data';
+import { useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 const StyledFullWidthNav = styled('nav')`
@@ -16,21 +16,22 @@ const StyledFullWidthNav = styled('nav')`
   }
 `;
 
-export default function SideNav({ data }: { data: Menu[] }) {
+export default function AsideNav({ data }: { data: Menu[] }) {
   const location = useLocation();
-  const navigate = useNavigate();
   return (
     <StyledFullWidthNav className="grid gap-1 p-1">
-      {data.map(({ path, label, icon: Icon }) => (
+      {data.map(({ path, onClick, label, icon: Icon }) => (
         <Button
-          key={path}
+          key={label}
           variant="ghost"
           size="icon"
-          onClick={() => navigate(path as string)}
+          onClick={() => {
+            onClick?.();
+          }}
           className={cn(
             'rounded-lg border border-transparent',
-            location.pathname.startsWith(path as string) &&
-              'bg-primary text-white hover:bg-primary hover:text-white',
+            // location.pathname.startsWith(path as string) &&
+            //   'bg-primary text-white hover:bg-primary hover:text-white',
             !location.pathname.startsWith(path as string) &&
               'hover:bg-white dark:hover:bg-gray-900 hover:border-gray-400 dark:hover:border-gray-700',
           )}
