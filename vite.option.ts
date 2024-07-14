@@ -6,6 +6,7 @@ export const resolve: ResolveOptions & {
 } = {
   alias: {
     '@/': new URL('./src/', import.meta.url).pathname,
+    $lib: new URL('./src/lib/', import.meta.url).pathname,
   },
 }
 export const test = {

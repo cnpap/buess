@@ -18,7 +18,9 @@
     "baseUrl": "./",
     "types": ["vite-plugin-pwa/client"],
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "$lib": ["./src/lib"],
+      "$lib/*": ["./src/lib/*"]
     }
   },
   "include": ["src", "playwright.config.ts"]

@@ -28,8 +28,8 @@ export default defineConfig(async () => {
     plugins: [
       tsconfigPaths(),
       ...plugins,
-      react(),
       svelte(),
+      react(),
       VitePWA({
         manifest,
         includeAssets: ['favicon.svg', 'favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
