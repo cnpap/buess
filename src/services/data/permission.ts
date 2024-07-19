@@ -1,4 +1,4 @@
-enum PermissionName {
+export enum PermissionName {
   ORIGINATIONS_USER_INVITE = 'originations:user:invite',
   ORIGINATIONS_USER_REMOVE = 'originations:user:remove',
   DATASOURCE_SELECT = 'datasource:select',
@@ -55,7 +55,7 @@ export const PERMISSIONS = [
   },
 ];
 
-interface OriginationRole {
+export interface OriginationRole {
   includes: PermissionName[];
   name: string;
   description: string;

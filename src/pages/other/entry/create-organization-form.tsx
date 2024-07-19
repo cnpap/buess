@@ -9,13 +9,18 @@ import { formSchema } from '@/services/logto/src/organization.zod';
 import NiceModal from '@ebay/nice-modal-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
-const CreateOrganizationForm = NiceModal.create(() => {
+interface CreateOrganizationFormProps {
+  onOk: () => void;
+}
+
+const CreateOrganizationForm = NiceModal.create<CreateOrganizationFormProps>(({ onOk }) => {
   const modal = NiceModal.useModal();
   const handleSubmit = async (value: z.infer<typeof formSchema>) => {
     createOrganizationByUser(value).then(async ({ success }) => {
       if (!success) {
         throw new Error('fail on use server function');
       }
+      onOk();
       modal.remove();
     });
   };

@@ -70,6 +70,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
+    "formsnap": "^1.0.1",
     "framer-motion": "^11.2.13",
     "hash-wasm": "^4.11.0",
     "is-mobile": "^4.0.0",
@@ -93,6 +94,7 @@
     "react-toastify": "^10.0.5",
     "recoil": "^0.7.7",
     "signale": "^1.4.0",
+    "sveltekit-superforms": "^2.16.0",
     "tailwind-merge": "^2.4.0",
     "tailwind-variants": "^0.2.1",
     "tailwindcss-animate": "^1.0.7",
@@ -100,7 +102,7 @@
     "tsx": "^4.15.1",
     "vaul": "^0.9.1",
     "vite-plugin-inspect": "^0.8.4",
-    "viteser": "^0.0.1-beta.30",
+    "viteser": "^0.0.1-beta.32",
     "zod": "^3.23.8"
   },
   "devDependencies": {

@@ -7,12 +7,87 @@ import { randomString } from '@/utils/str';
 import { OrganizationRoles } from 'kysely-codegen/dist/db';
 import { userPayload } from '@/services/func';
 import dayjs from 'dayjs';
+import { pexelsClient } from '@/utils/api-client';
+import { ApiRandomImageResponse } from '@/components/image-select/type';
+
+export async function freshOrganizationCoverImage(id: string) {
+  'use server';
+
+  await signIned();
+
+  const page = Math.floor(Math.random() * 200) + 1;
+  const res = (await pexelsClient.photos.curated({
+    per_page: 1,
+    page,
+  })) as unknown as ApiRandomImageResponse;
+  const coverImage = res.photos[0].src.original;
+
+  await facade.kysely
+    .updateTable('organizations')
+    .set({
+      custom_data: {
+        coverImage,
+      },
+    })
+    .where('id', '=', id)
+    .execute();
+
+  return {
+    success: true,
+  };
+}
+
+export async function deleteOrganizationById(id: string) {
+  'use server';
+
+  await signIned();
+  const payload = await userPayload();
+
+  const ok = await facade.kysely.transaction().execute(async (tx) => {
+    const organization = await tx
+      .selectFrom('organizations')
+      .selectAll()
+      .where('id', '=', id)
+      .where(({ exists, selectFrom }) =>
+        exists(
+          selectFrom('organization_user_relations')
+            .where('user_id', '=', payload.sub)
+            .where('tenant_id', '=', 'default')
+            .select('organization_id')
+            .whereRef('organization_id', '=', 'organizations.id'),
+        ),
+      )
+      .executeTakeFirst();
+    if (!organization) {
+      return false;
+    }
+
+    await tx.deleteFrom('organizations').where('id', '=', id).execute();
+
+    return true;
+  });
+
+  if (!ok) {
+    throw new Error('删除失败');
+  }
+
+  return {
+    success: true,
+  };
+}
 
 export async function createOrganizationByUser(value: z.infer<typeof formSchema>) {
   'use server';
 
   await signIned();
   const payload = await userPayload();
+
+  const res = (await pexelsClient.photos.curated({
+    per_page: 1,
+    // 随机获取一页
+    page: Math.floor(Math.random() * 10),
+  })) as unknown as ApiRandomImageResponse;
+  const coverImage = res.photos[0].src.original;
 
   const ok = await facade.kysely.transaction().execute(async (tx) => {
     const { id } = await tx
@@ -22,7 +97,9 @@ export async function createOrganizationByUser(value: z.infer<typeof formSchema>
         id: randomString(21),
         name: value.name,
         description: value.description,
-        custom_data: {},
+        custom_data: {
+          coverImage,
+        },
         created_at: new Date(),
       })
       .returning(['id'])
@@ -68,6 +145,7 @@ export async function organizationsByUser() {
   await signIned();
 
   const payload = await userPayload();
+  console.log(payload);
 
   const organizations = await facade.kysely
     .selectFrom('organizations')

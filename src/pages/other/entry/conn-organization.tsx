@@ -12,16 +12,18 @@ import { cn } from '@/lib/utils';
 import OrganizationCard from '@/pages/other/entry/organization-card';
 import NiceModal from '@ebay/nice-modal-react';
 import CreateOrganizationForm from '@/pages/other/entry/create-organization-form';
+import { useNavigate } from 'react-router-dom';
 
 function ConnOrganization() {
   const { signOut } = useLogto();
+  const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.clear();
     // noinspection JSIgnoredPromiseFromCall
     signOut(`${VITE_BASE_URL}/auth`);
   };
   const { organizations } = useStore($userPayloadAtom);
-  useMount(async () => {
+  const fresh = () => {
     organizationsByUser().then((res) => {
       if (res.data.length) {
         $userPayloadAtom.set({
@@ -30,9 +32,16 @@ function ConnOrganization() {
         });
       }
     });
+  };
+  useMount(async () => {
+    fresh();
   });
   const handleCreate = () => {
-    NiceModal.show(CreateOrganizationForm);
+    NiceModal.show(CreateOrganizationForm, {
+      onOk: () => {
+        fresh();
+      },
+    });
   };
   return (
     <Decorate>
@@ -40,7 +49,14 @@ function ConnOrganization() {
         <CardContent className={'p-6 flex gap-4'}>
           {organizations.length
             ? organizations.map((organization) => (
-                <OrganizationCard key={organization.id} organization={organization} />
+                <OrganizationCard
+                  onClick={() => {
+                    navigate(`/main?id=${organization.id}`);
+                  }}
+                  freshOrganization={fresh}
+                  key={organization.id}
+                  organization={organization}
+                />
               ))
             : 'loading...'}
         </CardContent>

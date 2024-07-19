@@ -1,5 +1,5 @@
 // src/api/axiosInstance.js
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { VITE_LOGTO_APP_ID } from '@/const';
 
 const setupAxiosInterceptors = () => {
@@ -21,7 +21,10 @@ const setupAxiosInterceptors = () => {
       return response;
     },
     (error) => {
-      // 处理响应错误
+      const response = error as AxiosResponse;
+      if (response.status === 401) {
+        location.href = '/auth';
+      }
       return Promise.reject(error);
     },
   );
