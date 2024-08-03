@@ -16,8 +16,8 @@ export function ProjectCard({ member, onClick, userId, freshTeam }: ProjectCardP
   const handleDelete = async () => {
     // noinspection ES6MissingAwait
     NiceModal.show(Confirm, {
-      title: 'delete team',
-      content: 'are you sure?',
+      title: 'delete project',
+      id: member.name as string,
       onOk: () => {
         deleteProject(member.project_id).then((res) => {
           if (res.success) {
@@ -30,9 +30,9 @@ export function ProjectCard({ member, onClick, userId, freshTeam }: ProjectCardP
   };
 
   return (
-    <div className="w-72 mx-auto cursor-default hover-container opacity-90 hover:opacity-100 transition-opacity duration-300">
-      <div className="relative overflow-hidden h-full rounded transition duration-200 group bg-white hover:shadow border border-gray-200 dark:border-gray-800">
-        <div className="h-[250px] py-4 px-4 dark:bg-zinc-900 flex flex-col justify-between">
+    <div className="relative w-72 mx-auto cursor-default hover-container opacity-90 hover:opacity-100 transition-opacity duration-300">
+      <div className=" overflow-hidden h-full rounded transition duration-200 group bg-white hover:shadow border border-gray-200 dark:border-gray-800">
+        <div className="h-[280px] project-card py-6 px-6 dark:bg-zinc-900 flex flex-col justify-between">
           <div>
             <h2 className="font-bold pb-2 text-lg text-zinc-700 dark:text-zinc-100">
               {member.name}

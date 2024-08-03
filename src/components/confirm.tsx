@@ -8,15 +8,18 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 interface ConfirmProps {
   title: string;
-  content: string;
+  id: string;
   onOk: () => void;
 }
 
-const Confirm = NiceModal.create<ConfirmProps>(({ title, content, onOk }) => {
+const Confirm = NiceModal.create<ConfirmProps>(({ title, id, onOk }) => {
   const modal = NiceModal.useModal();
+  const [value, setValue] = React.useState('');
+  const [error, setError] = React.useState('');
   return (
     <Dialog
       open={modal.visible}
@@ -27,12 +30,22 @@ const Confirm = NiceModal.create<ConfirmProps>(({ title, content, onOk }) => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          <div className="p-4">{content}</div>
+          <div className="py-4">
+            Please enter the name
+            <div className={'text-red-500 inline'}> [ {id} ] </div>
+            to confirm the deletion operation
+          </div>
         </DialogHeader>
+        <Input value={value} onChange={(e) => setValue(e.target.value)} />
+        <p className={'text-sm text-muted-foreground text-red-500'}>{error}</p>
         <DialogFooter className={'gap-4'}>
           <Button
             variant={'destructive'}
             onClick={() => {
+              if (value !== title) {
+                setError('Name does not match');
+                return;
+              }
               onOk();
               modal.remove();
             }}

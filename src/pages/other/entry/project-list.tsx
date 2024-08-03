@@ -1,14 +1,13 @@
 import Decorate from '@/components/decorate/decorate';
 import * as React from 'react';
 import { Button } from '@/components/ui/button';
-import { useUpdateEffect } from 'ahooks';
 import { cn } from '@/lib/utils';
 import ProjectCard from '@/pages/other/entry/project-card';
 import NiceModal from '@ebay/nice-modal-react';
 import { useAuth, useClerk } from '@clerk/clerk-react';
 import { VITE_CLERK_TEMPLATE } from '@/const';
 import CreateTeamForm from '@/pages/other/entry/create-project-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getProjectMembers, ProjectMember } from '@/pages/other/entry/api';
 
 function ConnTeam() {
@@ -19,7 +18,7 @@ function ConnTeam() {
     const newMembers = await getProjectMembers();
     setMembers(newMembers.data);
   };
-  useUpdateEffect(() => {
+  useEffect(() => {
     if (auth.isLoaded) {
       if (auth.isSignedIn) {
         (async () => {
@@ -37,7 +36,7 @@ function ConnTeam() {
         })();
       }
     }
-  }, [auth.isLoaded, auth.isSignedIn]);
+  }, [auth, auth.isLoaded, auth.isSignedIn]);
   const handleLogout = () => {
     clerk
       .signOut({

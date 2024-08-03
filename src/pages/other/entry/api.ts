@@ -15,13 +15,16 @@ export async function deleteProject(id: string) {
 
   const [payload] = getPayload();
   const result = await facade.kysely
-    .deleteFrom('project')
+    .updateTable('project')
     .where('id', '=', id)
     .where('created_by', '=', payload.sub)
+    .set({
+      delete_flag: true,
+    })
     .executeTakeFirst();
 
   return {
-    success: !!result.numDeletedRows,
+    success: !!result.numUpdatedRows,
   };
 }
 
