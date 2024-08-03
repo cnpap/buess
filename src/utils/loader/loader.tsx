@@ -1,8 +1,7 @@
 import { FC, Suspense, lazy, useEffect, useState } from 'react';
 
-import sleep from '@/utils/sleep';
-
 import { AnyProps, LoadComponent, LoaderDefaultOptions } from './types';
+import { sleep } from '@/utils/func';
 
 // a little bit complex staff is going on here
 // let me explain it

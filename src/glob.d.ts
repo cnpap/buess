@@ -1,10 +1,30 @@
-export type OrganizationPayload = {
-  lock?: boolean;
+import { PermissionName } from '@/services/data/permission';
+
+export interface SupabaseJwtPayload {
+  app_metadata: AppMetadata;
+  aud: string;
+  azp: string;
+  demo: string;
+  email: string;
+  exp: number;
+  iat: number;
+  iss: string;
+  jti: string;
+  nbf: number;
+  role: string;
+  sub: string;
+  user_metadata: UserMetadata;
+}
+
+export interface AppMetadata {}
+
+export interface UserMetadata {
+  teams: JwtTeamPartPayload[];
+}
+
+export type JwtTeamPartPayload = {
   id: string;
   name: string;
-  custom_data: {
-    coverImage?: string;
-  };
   created_at: string;
   description: string | null;
   roles: {
@@ -14,21 +34,19 @@ export type OrganizationPayload = {
 };
 
 export interface UserPayload {
-  organizations: OrganizationPayload[];
-  jti: string;
   // 用户 ID
   sub: string;
-  iat: number;
-  exp: number;
-  scope: string;
-  client_id: string;
-  iss: string;
-  aud: string;
+  permission: PermissionName[];
 }
 
 export type Required<T> = {
   [P in keyof T]-?: T[P];
 };
+
+declare module 'viteser/util' {
+  // noinspection JSUnusedGlobalSymbols
+  export interface ViteserJwtPayload extends SupabaseJwtPayload {}
+}
 
 // src/global.d.ts
 

@@ -1,6 +1,6 @@
 export enum PermissionName {
-  ORIGINATIONS_USER_INVITE = 'originations:user:invite',
-  ORIGINATIONS_USER_REMOVE = 'originations:user:remove',
+  USER_INVITE = 'user:invite',
+  USER_REMOVE = 'user:remove',
   DATASOURCE_SELECT = 'datasource:select',
   DATASOURCE_WRITE = 'datasource:write',
   SCHEMAS_SELECT = 'schemas:select',
@@ -13,12 +13,12 @@ export enum PermissionName {
 
 export const PERMISSIONS = [
   {
-    name: PermissionName.ORIGINATIONS_USER_INVITE,
-    description: 'Invite new members to the organization',
+    name: PermissionName.USER_INVITE,
+    description: 'Invite new members to the team',
   },
   {
-    name: PermissionName.ORIGINATIONS_USER_REMOVE,
-    description: 'Remove members from the organization',
+    name: PermissionName.USER_REMOVE,
+    description: 'Remove members from the team',
   },
   {
     name: PermissionName.DATASOURCE_SELECT,
@@ -55,13 +55,13 @@ export const PERMISSIONS = [
   },
 ];
 
-export interface OriginationRole {
+export interface TeamRole {
   includes: PermissionName[];
   name: string;
   description: string;
 }
 
-export const ORIGINATION_ROLE_DBA: OriginationRole = {
+export const TEAM_ROLE_DBA: TeamRole = {
   includes: [
     PermissionName.DATASOURCE_SELECT,
     PermissionName.DATASOURCE_WRITE,
@@ -69,47 +69,47 @@ export const ORIGINATION_ROLE_DBA: OriginationRole = {
     PermissionName.CONFIGS_SELECT,
     PermissionName.OPTIONS_SELECT,
   ],
-  name: 'origination:role:dba',
+  name: 'role:dba',
   description: `\
 The database administrator has the highest authority and can manage the database and data source`,
 };
 
-export const ORIGINATION_ROLE_DEVELOPER: OriginationRole = {
+export const TEAM_ROLE_DEVELOPER: TeamRole = {
   includes: [
     PermissionName.SCHEMAS_WRITE,
     PermissionName.CONFIGS_WRITE,
     PermissionName.OPTIONS_WRITE,
   ],
-  name: 'origination:role:developer',
+  name: 'role:developer',
   description: `\
 Developers can modify the schema, configuration, and business settings of the database`,
 };
 
-export const ORIGINATION_ROLE_HR: OriginationRole = {
-  includes: [PermissionName.ORIGINATIONS_USER_INVITE, PermissionName.ORIGINATIONS_USER_REMOVE],
-  name: 'origination:role:hr',
+export const TEAM_ROLE_HR: TeamRole = {
+  includes: [PermissionName.USER_INVITE, PermissionName.USER_REMOVE],
+  name: 'role:hr',
   description: `\
-HR can manage the organization's members`,
+HR can manage the team's members`,
 };
 
-export const ORIGINATION_ROLE_PD: OriginationRole = {
+export const TEAM_ROLE_PD: TeamRole = {
   includes: [
-    PermissionName.ORIGINATIONS_USER_INVITE,
-    PermissionName.ORIGINATIONS_USER_REMOVE,
+    PermissionName.USER_INVITE,
+    PermissionName.USER_REMOVE,
     PermissionName.DATASOURCE_SELECT,
     PermissionName.SCHEMAS_WRITE,
     PermissionName.CONFIGS_SELECT,
     PermissionName.OPTIONS_SELECT,
   ],
-  name: 'origination:role:pd',
+  name: 'role:pd',
   description: `\
-Product managers can manage the organization's members, data sources, and business settings`,
+Product managers can manage the team's members, data sources, and business settings`,
 };
 
-export const ORIGINATION_ROLE_MASTER: OriginationRole = {
+export const TEAM_ROLE_MASTER: TeamRole = {
   includes: [
-    PermissionName.ORIGINATIONS_USER_INVITE,
-    PermissionName.ORIGINATIONS_USER_REMOVE,
+    PermissionName.USER_INVITE,
+    PermissionName.USER_REMOVE,
     PermissionName.DATASOURCE_SELECT,
     PermissionName.DATASOURCE_WRITE,
     PermissionName.SCHEMAS_SELECT,
@@ -119,15 +119,15 @@ export const ORIGINATION_ROLE_MASTER: OriginationRole = {
     PermissionName.OPTIONS_SELECT,
     PermissionName.OPTIONS_WRITE,
   ],
-  name: 'origination:role:master',
+  name: 'role:master',
   description: `\
-The master has the highest authority and can manage the organization's members, data sources, and business settings`,
+The master has the highest authority and can manage the team's members, data sources, and business settings`,
 };
 
-export const ORIGINATION_ROLES: OriginationRole[] = [
-  ORIGINATION_ROLE_DBA,
-  ORIGINATION_ROLE_DEVELOPER,
-  ORIGINATION_ROLE_HR,
-  ORIGINATION_ROLE_PD,
-  ORIGINATION_ROLE_MASTER,
+export const TEAM_ROLES: TeamRole[] = [
+  TEAM_ROLE_DBA,
+  TEAM_ROLE_DEVELOPER,
+  TEAM_ROLE_HR,
+  TEAM_ROLE_PD,
+  TEAM_ROLE_MASTER,
 ];

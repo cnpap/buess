@@ -1,8 +1,8 @@
 import { email, messages } from '@/config';
-import resetApp from '@/utils/reset-app';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Mail, RotateCcw } from 'lucide-react';
+import { resetApp } from '@/utils/func';
 
 function AppErrorBoundaryFallback() {
   return (

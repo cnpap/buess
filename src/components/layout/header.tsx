@@ -9,9 +9,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useLogto } from '@logto/react';
+// import { useLogto } from '@logto/react';
 import { useMount } from 'ahooks';
-import { VITE_BASE_URL, VITE_RESOURCE_BUESS } from '@/const';
+// import { VITE_BASE_URL, VITE_RESOURCE_BUESS } from '@/const';
 import { HeaderTabs } from '@/components/layout/header-tabs';
 
 function HeaderLeft() {
@@ -30,19 +30,19 @@ function HeaderLeft() {
 }
 
 function HeaderRight() {
-  const { signOut, fetchUserInfo, getAccessTokenClaims } = useLogto();
+  // const { signOut, fetchUserInfo, getAccessTokenClaims } = useLogto();
   const handleLogout = () => {
     localStorage.clear();
     // noinspection JSIgnoredPromiseFromCall
-    signOut(`${VITE_BASE_URL}/auth`);
+    // signOut(`${VITE_BASE_URL}/auth`);
   };
   useMount(() => {
-    getAccessTokenClaims(VITE_RESOURCE_BUESS).then((claims) => {
-      console.log('claims', claims);
-    });
-    fetchUserInfo().then((userInfo) => {
-      console.log('userInfo', userInfo);
-    });
+    // getAccessTokenClaims(VITE_RESOURCE_BUESS).then((claims) => {
+    //   console.log('claims', claims);
+    // });
+    // fetchUserInfo().then((userInfo) => {
+    //   console.log('userInfo', userInfo);
+    // });
   });
   return (
     <div className="flex h-14 items-center gap-4 px-4 lg:h-[60px] lg:px-6">

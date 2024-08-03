@@ -1,17 +1,16 @@
-import { VITE_LOGTO_APP_ID, VITE_LOGTO_SERVE } from '@/const';
-import { createRemoteJWKSet, jwtVerify } from 'jose';
-import { UserPayload } from '@/glob';
-import { getPayload } from 'viteser/dist/util';
+import { SupabaseJwtPayload, UserPayload } from '@/glob';
+import { getPayload } from 'viteser/message';
+import jwt from 'jsonwebtoken';
+import { VITE_JWT_SECRET } from '@/const';
 
-export async function verifyToken(token: string) {
-  return jwtVerify(
-    token,
-    createRemoteJWKSet(new URL(`${VITE_LOGTO_SERVE}/oidc/jwks`)), // generate a jwks using jwks_uri inquired from Logto server
-    {
-      issuer: `${VITE_LOGTO_SERVE}/oidc`,
-      audience: VITE_LOGTO_APP_ID,
-    },
-  );
+export function verifyToken(token: string) {
+  const payload = jwt.verify(token, VITE_JWT_SECRET, {
+    audience: 'authenticated',
+  }) as SupabaseJwtPayload;
+  if (payload.exp * 1000 < Date.now()) {
+    throw new Error('Token expired');
+  }
+  return payload;
 }
 
 export async function userPayload() {

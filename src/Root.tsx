@@ -3,24 +3,18 @@ import { createRoot } from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from '@/components/theme-provider';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { LogtoConfig, LogtoProvider } from '@logto/react';
-import { VITE_LOGTO_APP_ID, VITE_LOGTO_SERVE, VITE_RESOURCE_BUESS } from '@/const';
+import { ClerkProvider } from '@clerk/clerk-react';
 import NiceModal from '@ebay/nice-modal-react';
+import { VITE_CLERK_PUBLISHABLE_KEY } from '@/const';
 
 const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container);
-const config: LogtoConfig = {
-  endpoint: VITE_LOGTO_SERVE,
-  appId: VITE_LOGTO_APP_ID,
-  resources: [VITE_RESOURCE_BUESS],
-  scopes: [],
-};
 
 function render(App: ComponentType) {
   root.render(
     <StrictMode>
       <NiceModal.Provider>
-        <LogtoProvider config={config}>
+        <ClerkProvider publishableKey={VITE_CLERK_PUBLISHABLE_KEY} afterSignOutUrl="/auth">
           <TooltipProvider>
             <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
               <HelmetProvider>
@@ -28,7 +22,7 @@ function render(App: ComponentType) {
               </HelmetProvider>
             </ThemeProvider>
           </TooltipProvider>
-        </LogtoProvider>
+        </ClerkProvider>
       </NiceModal.Provider>
     </StrictMode>,
   );

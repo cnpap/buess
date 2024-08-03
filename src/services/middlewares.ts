@@ -1,5 +1,5 @@
 import { verifyToken } from '@/services/func';
-import { response, getContext, getPayload } from 'viteser/dist/util';
+import { response, getContext, getPayload } from 'viteser/message';
 
 export async function signIned() {
   try {
@@ -11,9 +11,13 @@ export async function signIned() {
       // noinspection ExceptionCaughtLocallyJS
       throw new Error('Token is required');
     }
-    const { payload } = await verifyToken(token);
+    const payload = verifyToken(token);
     const [, setJwtPayload] = getPayload();
+    if (payload.sub.startsWith('user_')) {
+      payload.sub = payload.sub.replace('user_', '');
+    }
     setJwtPayload(payload);
+
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
   } catch (e: Error) {

@@ -10,7 +10,7 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -23,6 +23,6 @@
       "$lib/*": ["./src/lib/*"]
     }
   },
-  "include": ["src", "playwright.config.ts", "vite.config.ts", "vite.option.ts"],
+  "include": ["src", "demo.ts", "playwright.config.ts", "vite.config.ts", "vite.option.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

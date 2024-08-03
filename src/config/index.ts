@@ -1,6 +1,7 @@
-import isMobile from '@/utils/is-mobile';
-
 import type { Notifications } from './types';
+import isMobileFunction from 'is-mobile';
+
+const isMobile = isMobileFunction();
 
 const title = 'React PWA & Shadcn';
 

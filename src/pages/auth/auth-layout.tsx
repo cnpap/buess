@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-import { useLogto } from '@logto/react';
-import { useMount } from 'ahooks';
+import { useUpdateEffect } from 'ahooks';
 import Decorate from '@/components/decorate/decorate';
 import SignInButton from '@/pages/auth/components/sign-in-button';
 import { TypewriterEffectSmooth } from '@/components/ui/typewriter-effect';
+import { useAuth } from '@clerk/clerk-react';
 
 const words = [
   {
-    text: 'Integrate',
+    text: 'Use AI Coder',
   },
   {
     text: 'in',
@@ -23,21 +23,19 @@ const words = [
 
 export default function AuthLayout() {
   const navigate = useNavigate();
-  const { isAuthenticated, getIdTokenClaims } = useLogto();
-  useMount(() => {
-    if (isAuthenticated) {
-      getIdTokenClaims().then((claims) => {
-        localStorage.setItem('u', JSON.stringify(claims));
+  const auth = useAuth();
+  useUpdateEffect(() => {
+    if (auth.isLoaded) {
+      if (auth.isSignedIn) {
         navigate('/conn');
-      });
+      }
     }
-  });
+  }, [auth.isLoaded, auth.isSignedIn]);
 
-  // noinspection HtmlUnknownTarget
   return (
     <Decorate>
       <div className="flex relative flex-col z-50 items-center justify-center h-screen">
-        <TypewriterEffectSmooth width={570} words={words} />
+        <TypewriterEffectSmooth width={670} words={words} />
         <SignInButton />
       </div>
     </Decorate>

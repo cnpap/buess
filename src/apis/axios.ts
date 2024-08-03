@@ -1,11 +1,9 @@
-// src/api/axiosInstance.js
-import axios, { AxiosResponse } from 'axios';
-import { VITE_LOGTO_APP_ID } from '@/const';
+import axios from 'axios';
 
 const setupAxiosInterceptors = () => {
   axios.interceptors.request.use(
     (config) => {
-      const token = localStorage.getItem(`logto:${VITE_LOGTO_APP_ID}:idToken`);
+      const token = localStorage.getItem(`token`);
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -21,8 +19,10 @@ const setupAxiosInterceptors = () => {
       return response;
     },
     (error) => {
-      const response = error as AxiosResponse;
-      if (response.status === 401) {
+      const { response } = error;
+      if (response && response.status === 401) {
+        localStorage.clear();
+        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         location.href = '/auth';
       }
       return Promise.reject(error);
