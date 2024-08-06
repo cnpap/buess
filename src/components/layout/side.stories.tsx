@@ -1,11 +1,11 @@
 import type { Meta } from '@storybook/react';
 import RouteTemplate from '@/routes';
-import Aside from '@/components/layout/aside';
+import Side from '@/components/layout/side';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
   title: 'Page/Main',
-  component: Aside,
+  component: Side,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: 'centered',
@@ -15,7 +15,7 @@ const meta = {
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {},
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-} satisfies Meta<typeof Aside>;
+} satisfies Meta<typeof Side>;
 
 // noinspection JSUnusedGlobalSymbols
 export default meta;

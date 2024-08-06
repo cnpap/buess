@@ -1,10 +1,13 @@
 import { $routeIframesAtom, RouteIframe } from '@/routes/store';
 import { useMount } from 'ahooks';
+import { useParams } from 'react-router-dom';
 
-export const homePathname = '/main/home';
+export let homePathname = '/main/home';
 
 export function useInitRouteIframes() {
+  const params = useParams();
   useMount(() => {
+    homePathname = `/${params.id}${homePathname}`;
     const cache = localStorage.getItem('route:iframes');
     if (cache) {
       const routeIframes = JSON.parse(cache) as RouteIframe[];
@@ -18,7 +21,6 @@ export function useInitRouteIframes() {
       $routeIframesAtom.set([
         {
           title: 'home',
-          key: 'home',
           src: homePathname,
           isLoaded: true,
           current: true,
@@ -28,11 +30,12 @@ export function useInitRouteIframes() {
   });
 }
 
-export function handleRouteIframes() {
-  const pushRouteIframe = (routeIframe: RouteIframe) => {
+export const routeIframes = {
+  pushRouteIframe: (routeIframe: RouteIframe) => {
     const routeIframes = $routeIframesAtom.get();
     let isExist = false;
     for (let i = 0; i < routeIframes.length; i++) {
+      console.log('src', routeIframe.src, routeIframes[i].src);
       if (routeIframe.src === routeIframes[i].src) {
         isExist = true;
         if (routeIframes[i].current) {
@@ -55,25 +58,21 @@ export function handleRouteIframes() {
       $routeIframesAtom.set(routeIframes);
       localStorage.setItem('route:iframes', JSON.stringify(routeIframes));
     }
-  };
-
-  const closeRouteIframe = (key: string) => {
+  },
+  closeRouteIframe: (src: string, to: (path: string) => void) => {
     const routeIframes = $routeIframesAtom.get();
     for (let i = 0; i < routeIframes.length; i++) {
-      if (routeIframes[i].key === key) {
+      console.log('src', src, routeIframes[i].src);
+      if (routeIframes[i].src === src) {
         if (routeIframes[i].current) {
           routeIframes[i - 1].current = true;
+          to(routeIframes[i - 1].src);
         }
         routeIframes.splice(i, 1);
-        $routeIframesAtom.set(routeIframes);
+        $routeIframesAtom.set([...routeIframes]);
         localStorage.setItem('route:iframes', JSON.stringify(routeIframes));
         break;
       }
     }
-  };
-
-  return {
-    pushRouteIframe,
-    closeRouteIframe,
-  };
-}
+  },
+};

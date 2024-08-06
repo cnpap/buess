@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 import { Button } from '@/components/ui/button';
 import { Menu } from '@/components/layout/_data';
-import { useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { $menusAtom } from '@/atoms/menu';
+import { useStore } from '@nanostores/react';
 
 const StyledFullWidthNav = styled('nav')`
   & > button {
@@ -16,30 +17,32 @@ const StyledFullWidthNav = styled('nav')`
   }
 `;
 
-export default function AsideNav({ data }: { data: Menu[] }) {
-  const location = useLocation();
+export default function SideNav({ data }: { data: Menu[] }) {
+  const menusAtom = useStore($menusAtom);
   return (
     <StyledFullWidthNav className="grid gap-1 p-1">
-      {data.map(({ path, onClick, label, icon: Icon }) => (
+      {data.map((menu) => (
         <Button
-          key={label}
+          key={menu.label}
           variant="ghost"
           size="icon"
-          onClick={() => {
-            onClick?.();
+          onMouseEnter={() => {
+            if (menu.onClick) {
+              menu.onClick?.();
+            } else if (menu.children) {
+              $menusAtom.set(menu);
+            }
           }}
           className={cn(
             'rounded-lg border border-transparent',
-            // location.pathname.startsWith(path as string) &&
-            //   'bg-primary text-white hover:bg-primary hover:text-white',
-            !location.pathname.startsWith(path as string) &&
-              'hover:bg-white dark:hover:bg-gray-900 hover:border-gray-400 dark:hover:border-gray-700',
+            menusAtom?.path.startsWith(menu.path as string) &&
+              'bg-white text-black dark:bg-muted dark:text-white',
           )}
-          aria-label={label}
+          aria-label={menu.label}
         >
           <div className={'flex flex-col gap-2 items-center'}>
-            <Icon className="size-5" />
-            <div>{label}</div>
+            {menu.icon && <menu.icon className="size-5" />}
+            <div>{menu.label}</div>
           </div>
         </Button>
       ))}

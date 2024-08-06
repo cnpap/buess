@@ -200,7 +200,57 @@ button[data-localization-key='userProfile.start.dangerSection.deleteAccountButto
     bottom: 0;
     border-radius: inherit;
     padding: 0.5px; /* 边框宽度 */
-    background: linear-gradient(45deg, blue, indigo, violet);
+    background: linear-gradient(45deg, blue, #176ac9, #1092c1);
+    /*noinspection CssInvalidPropertyValue,CssInvalidFunction*/
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    z-index: -1;
+  }
+
+  .dark-rainbow-border {
+    position: relative;
+    padding: 1rem;
+    z-index: 0;
+  }
+
+  .dark-rainbow-border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    padding: 0.5px; /* 边框宽度 */
+    background: linear-gradient(45deg, #a6ee0c, #0de572, #35e81c);
+    /*noinspection CssInvalidPropertyValue,CssInvalidFunction*/
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    z-index: -1;
+  }
+
+  .gray-rainbow-border {
+    position: relative;
+    padding: 1rem;
+    z-index: 0;
+  }
+
+  .gray-rainbow-border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    padding: 0.5px; /* 边框宽度 */
+    background: #eee;
     /*noinspection CssInvalidPropertyValue,CssInvalidFunction*/
     -webkit-mask:
       linear-gradient(#fff 0 0) content-box,

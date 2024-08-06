@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { Bell, CircleUser, Package2 } from 'lucide-react';
+import { Link, useLocation, useParams } from 'react-router-dom';
+import { Bell, CircleUser } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -9,43 +9,70 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-// import { useLogto } from '@logto/react';
-import { useMount } from 'ahooks';
-// import { VITE_BASE_URL, VITE_RESOURCE_BUESS } from '@/const';
 import { HeaderTabs } from '@/components/layout/header-tabs';
+import React from 'react';
+import { $menusAtom } from '@/atoms/menu';
+import { useStore } from '@nanostores/react';
+import { cn } from '$lib/utils';
+import { routeIframes } from '@/routes/hooks';
 
-function HeaderLeft() {
+export function MainLayoutLeft() {
+  const menusAtom = useStore($menusAtom);
+  const location = useLocation();
+  const params = useParams();
   return (
-    <div className="flex items-center border-r border-b px-4 lg:px-6">
-      <Link to="/" className="flex items-center gap-2 font-semibold">
-        <Package2 className="h-6 w-6" />
-        <span className="">Acme Inc</span>
-      </Link>
-      <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
-        <Bell className="h-4 w-4" />
-        <span className="sr-only">Toggle notifications</span>
-      </Button>
+    <div className="hidden min-h-screen border-r bg-muted/40 md:block">
+      <div className="flex h-full max-h-screen flex-col gap-2">
+        <div className="flex h-14 items-center border-b px-5 lg:h-[60px] lg:px-6">
+          <Link to="/" className="flex items-center gap-4 font-semibold">
+            <span className="">buess</span>
+          </Link>
+          <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
+            <Bell className="h-4 w-4" />
+            <span className="sr-only">Toggle notifications</span>
+          </Button>
+        </div>
+        {menusAtom.children && (
+          <div className="flex-1 py-2">
+            <nav className="grid items-start px-2 space-y-1 text-sm font-medium lg:px-3">
+              {menusAtom.children?.map((menuAtom) => {
+                const src = `/${params.id}` + menusAtom.path + menuAtom.path;
+                return (
+                  <Link
+                    key={menuAtom.path}
+                    to={src}
+                    onClick={() => {
+                      routeIframes.pushRouteIframe({
+                        title: menuAtom.label,
+                        src,
+                        isLoaded: true,
+                        current: true,
+                      });
+                    }}
+                    className={cn(
+                      'flex items-center dark:hover:text-white rounded-lg px-3 py-3 text-muted-foreground transition-all hover:text-primary',
+                      location.pathname.startsWith(menusAtom.path + menuAtom.path) &&
+                        'bg-muted dark:text-white',
+                    )}
+                  >
+                    {menuAtom.label}
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
-function HeaderRight() {
-  // const { signOut, fetchUserInfo, getAccessTokenClaims } = useLogto();
+export function MainLayoutRight() {
   const handleLogout = () => {
     localStorage.clear();
-    // noinspection JSIgnoredPromiseFromCall
-    // signOut(`${VITE_BASE_URL}/auth`);
   };
-  useMount(() => {
-    // getAccessTokenClaims(VITE_RESOURCE_BUESS).then((claims) => {
-    //   console.log('claims', claims);
-    // });
-    // fetchUserInfo().then((userInfo) => {
-    //   console.log('userInfo', userInfo);
-    // });
-  });
   return (
-    <div className="flex h-14 items-center gap-4 px-4 lg:h-[60px] lg:px-6">
+    <header className="flex h-14 items-center gap-4 px-4 lg:h-[60px] lg:px-6">
       <div className="w-full flex-1">
         <HeaderTabs />
       </div>
@@ -65,20 +92,6 @@ function HeaderRight() {
           <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </div>
-  );
-}
-
-export default function Header() {
-  return (
-    <div
-      className="
-    grid h-14 lg:h-[60px] w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] border-b bg-muted
-    sticky top-0 z-10
-    "
-    >
-      <HeaderLeft />
-      <HeaderRight />
-    </div>
+    </header>
   );
 }

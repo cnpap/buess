@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 export default function MainData() {
   return (
-    <div className="grid h-full w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+    <div className="grid h-full w-full md:grid-cols-[160px_1fr] lg:grid-cols-[200px_1fr]">
       <div className="hidden border-r bg-muted md:block">
         <div className="flex h-full flex-col gap-2">
           <div className="flex-1">

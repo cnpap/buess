@@ -10,9 +10,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { useMount } from 'ahooks';
 
-// import { useLayoutEffect, useRef } from 'react';
-// import Hello from '@/components/hello.svelte';
-
 export function useToggleEvent() {
   const { setTheme, theme } = useTheme();
   useHotkeys('alt+t', () => {
@@ -37,19 +34,10 @@ export function useToggleEvent() {
 
 function App() {
   useToggleEvent();
-  // const svelteRef = useRef();
-  // useLayoutEffect(() => {
-  //   while (svelteRef.current?.firstChild) {
-  //     svelteRef.current?.firstChild?.remove();
-  //   }
-  //   new Hello({
-  //     target: svelteRef.current,
-  //   });
-  // }, []);
+
   return (
     <Fragment>
       <BrowserRouter>
-        {/*<div ref={svelteRef}></div>*/}
         <RouteTemplate />
       </BrowserRouter>
       <ToastContainer />

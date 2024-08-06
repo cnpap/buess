@@ -1,44 +1,68 @@
 import React from 'react';
-import { Home, SquareUser, LifeBuoy, Grid2x2Check, Code2, Database, FileCog } from 'lucide-react';
-import { handleRouteIframes } from '@/routes/hooks';
-import NiceModal from '@ebay/nice-modal-react';
-import MainDataDialog from '@/pages/main/data/main-data-dialog';
+import { SquareUser, LifeBuoy, Grid2x2Check, Code2, Settings, PlugZap } from 'lucide-react';
 
 export interface Menu {
   // 要支持输入 className
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  icon?: React.FC<React.SVGProps<SVGSVGElement>>;
   label: string;
   path: string;
   onClick?: () => void;
+  children?: Menu[];
 }
 
+export const homeMenu: Menu = {
+  label: 'home',
+  path: '/main/home',
+};
+
+export const confMenu: Menu = {
+  label: 'conf',
+  path: '/main/conf',
+  icon: Settings,
+  children: [
+    {
+      label: 'database',
+      path: '/database',
+    },
+    {
+      label: 'storage',
+      path: '/storage',
+    },
+    {
+      label: 'queue',
+      path: '/queue',
+    },
+    {
+      label: 'ai',
+      path: '/ai',
+    },
+    {
+      label: 'service',
+      path: '/service',
+    },
+  ],
+};
+
 export const topMenus: Menu[] = [
+  confMenu,
   {
-    label: 'home',
-    path: '/main/home',
-    icon: Home,
-    onClick: () => {
-      handleRouteIframes().pushRouteIframe({
-        src: '/main/home',
-        title: 'home',
-        key: 'home',
-        isLoaded: true,
-      });
-    },
-  },
-  {
-    label: 'data',
-    path: '/main/data',
-    icon: Database,
-    onClick: () => {
-      // noinspection JSIgnoredPromiseFromCall
-      NiceModal.show(MainDataDialog);
-    },
-  },
-  {
-    label: 'conf',
-    path: '/main/conf',
-    icon: FileCog,
+    label: 'conn',
+    path: '/main/conn',
+    icon: PlugZap,
+    children: [
+      {
+        label: 'database',
+        path: '/database',
+      },
+      {
+        label: 'relation',
+        path: '/relation',
+      },
+      {
+        label: 'graph',
+        path: '/graph',
+      },
+    ],
   },
   {
     label: 'cicd',
