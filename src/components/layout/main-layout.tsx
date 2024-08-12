@@ -21,24 +21,25 @@ export default function MainLayout() {
         <div className="flex flex-col">
           <MainLayoutRight />
           <main className="h-[calc(100vh-var(--header-height))] flex flex-1 overflow-auto md:grid-cols-2 lg:grid-cols-3">
-            {routeIframes.map((routeIframe) => {
-              const src = routeIframe.src.replace(/\/main/, '');
-              return (
-                <>
-                  {routeIframe.isLoaded && (
-                    <div
-                      style={{
-                        display: routeIframe.current ? 'block' : 'none',
-                      }}
-                      key={routeIframe.src}
-                      className="w-full h-full"
-                    >
-                      <iframe title={routeIframe.title} src={src} className="w-full h-full" />
-                    </div>
-                  )}
-                </>
-              );
-            })}
+            {routeIframes
+              .map((routeIframe) => {
+                const src = routeIframe.src.replace(/\/main/, '');
+                if (!routeIframe.isLoaded) {
+                  return null;
+                }
+                return (
+                  <div
+                    style={{
+                      display: routeIframe.current ? 'block' : 'none',
+                    }}
+                    key={routeIframe.src}
+                    className="w-full h-full"
+                  >
+                    <iframe title={routeIframe.title} src={src} className="w-full h-full" />
+                  </div>
+                );
+              })
+              .filter(Boolean)}
           </main>
         </div>
       </div>

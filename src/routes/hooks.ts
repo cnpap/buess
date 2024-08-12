@@ -2,12 +2,12 @@ import { $routeIframesAtom, RouteIframe } from '@/routes/store';
 import { useMount } from 'ahooks';
 import { useParams } from 'react-router-dom';
 
-export let homePathname = '/main/home';
+export let homePathname = '';
 
 export function useInitRouteIframes() {
   const params = useParams();
   useMount(() => {
-    homePathname = `/${params.id}${homePathname}`;
+    homePathname = `/${params.id}/main/home`;
     const cache = localStorage.getItem('route:iframes');
     if (cache) {
       const routeIframes = JSON.parse(cache) as RouteIframe[];

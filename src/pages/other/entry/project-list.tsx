@@ -63,7 +63,7 @@ function ConnTeam() {
               <ProjectCard
                 userId={userId}
                 onClick={() => {
-                  window.open(`/main?id=${member.project_id}`);
+                  window.open(`/${member.project_id}/main/home`);
                 }}
                 freshTeam={fresh}
                 key={member.project_id}

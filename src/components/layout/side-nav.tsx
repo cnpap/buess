@@ -42,7 +42,7 @@ export default function SideNav({ data }: { data: Menu[] }) {
         >
           <div className={'flex flex-col gap-2 items-center'}>
             {menu.icon && <menu.icon className="size-5" />}
-            <div>{menu.label}</div>
+            <div className={'text-sm'}>{menu.label}</div>
           </div>
         </Button>
       ))}

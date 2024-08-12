@@ -1,9 +1,7 @@
+import TaskPage from '@/pages/main/conf/database/page';
+
 const ConfDatabase = () => {
-  return (
-    <div className={'p-8'}>
-      <h1>ConfDatabase</h1>
-    </div>
-  );
+  return <TaskPage />;
 };
 
 export default ConfDatabase;
