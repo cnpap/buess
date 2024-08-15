@@ -3,7 +3,7 @@ import { $routeIframesAtom, RouteIframe } from '@/routes/store';
 import { useStore } from '@nanostores/react';
 import { cn } from '@/lib/utils';
 import { routeIframes } from '@/routes/hooks';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTheme } from '@/components/theme-provider';
 
 interface HeaderTabProps {
@@ -49,18 +49,23 @@ function HeaderTab({ routeIframe, to, close }: HeaderTabProps) {
 export function HeaderTabs() {
   const routeIframesAtom = useStore($routeIframesAtom);
   const navigate = useNavigate();
+  const id = useParams().id as string;
   return (
     <div className={'flex gap-4'}>
       {routeIframesAtom.map((tab) => (
         <HeaderTab
           to={() => {
             navigate(tab.src);
-            routeIframes.pushRouteIframe(tab);
+            routeIframes.pushRouteIframe(tab, id);
           }}
           close={() => {
-            routeIframes.closeRouteIframe(tab.src, (path) => {
-              navigate(path);
-            });
+            routeIframes.closeRouteIframe(
+              tab.src,
+              (path) => {
+                navigate(path);
+              },
+              id,
+            );
           }}
           key={tab.src}
           routeIframe={tab}
