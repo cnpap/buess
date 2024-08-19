@@ -16,6 +16,10 @@ export function useInitRouteIframes() {
       for (let i = 0; i < routeIframes.length; i++) {
         if (location.pathname !== routeIframes[i].src) {
           routeIframes[i].isLoaded = false;
+          routeIframes[i].current = false;
+        } else {
+          routeIframes[i].isLoaded = true;
+          routeIframes[i].current = true;
         }
       }
       $routeIframesAtom.set(routeIframes);
