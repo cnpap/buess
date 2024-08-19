@@ -1,14 +1,14 @@
 import Decorate from '@/components/decorate/decorate';
 import * as React from 'react';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import ProjectCard from '@/pages/other/entry/project-card';
+import { cn } from '$lib/utils';
+import ProjectCard from '@/pages/entry/project-card';
 import NiceModal from '@ebay/nice-modal-react';
 import { useAuth, useClerk } from '@clerk/clerk-react';
 import { VITE_CLERK_TEMPLATE } from '@/const';
-import CreateTeamForm from '@/pages/other/entry/create-project-form';
+import CreateTeamForm from '@/pages/entry/create-project-form';
 import { useEffect, useState } from 'react';
-import { getProjectMembers, ProjectMember } from '@/pages/other/entry/api';
+import { getProjectMembers, ProjectMember } from '@/pages/entry/api';
 
 function ConnTeam() {
   const clerk = useClerk();

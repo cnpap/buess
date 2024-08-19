@@ -20,10 +20,9 @@ const setupAxiosInterceptors = () => {
     },
     (error) => {
       const { response } = error;
-      if (response && response.status === 401) {
-        localStorage.clear();
-        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        location.href = '/auth';
+      if (response && [401, 403].includes(response.status)) {
+        const channel = new BroadcastChannel('40x');
+        channel.postMessage('40x');
       }
       return Promise.reject(error);
     },

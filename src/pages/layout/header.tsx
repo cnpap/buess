@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { HeaderTabs } from '@/components/layout/header-tabs';
+import { HeaderTabs } from '@/pages/layout/header-tabs';
 import React from 'react';
 import { $menusAtom } from '@/atoms/menu';
 import { useStore } from '@nanostores/react';
@@ -24,7 +24,7 @@ export function MainLayoutLeft() {
     <div className="border-r bg-muted/40 md:block">
       <div className="flex h-full max-h-screen relative flex-col gap-2">
         <div className="flex h-14 items-center border-b px-5 lg:h-[60px] lg:px-6">
-          <Link to="/" className="flex items-center gap-4 font-semibold">
+          <Link to="/public" className="flex items-center gap-4 font-semibold">
             <span className="">buess</span>
           </Link>
           <Button variant="outline" size="icon" className="ml-auto h-8 w-8">

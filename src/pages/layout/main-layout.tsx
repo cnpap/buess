@@ -1,15 +1,27 @@
-import Side from '@/components/layout/side';
-import { Header } from '@/components/layout/header';
+import Side from '@/pages/layout/side';
+import { Header } from '@/pages/layout/header';
 import { useStore } from '@nanostores/react';
 import { $routeIframesAtom } from '@/routes/store';
 import { useInitRouteIframes } from '@/routes/hooks';
 import React from 'react';
 import { $menusOpenAtom } from '@/atoms/menu';
+import { useNavigate } from 'react-router-dom';
+
+function listen40x(logout: () => void) {
+  const channel = new BroadcastChannel('40x');
+  channel.onmessage = () => {
+    logout();
+  };
+}
 
 export default function MainLayout() {
   useInitRouteIframes();
   const routeIframes = useStore($routeIframesAtom);
   const menusOpenAtom = useStore($menusOpenAtom);
+  const navigate = useNavigate();
+  listen40x(() => {
+    navigate('/auth');
+  });
   return (
     <div className="grid h-screen w-full pl-[6rem]">
       <Side />
@@ -26,7 +38,6 @@ export default function MainLayout() {
             {routeIframes
               .map((routeIframe) => {
                 const src = routeIframe.src.replace(/\/main/, '');
-                console.log('src', routeIframe);
                 if (!routeIframe.isLoaded) {
                   return null;
                 }

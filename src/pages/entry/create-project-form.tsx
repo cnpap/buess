@@ -6,7 +6,7 @@ import NiceModal from '@ebay/nice-modal-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { formSchema } from '@/pages/other/entry/create-project-form.zod';
+import { formSchema } from '@/pages/entry/create-project-form.zod';
 import {
   Form,
   FormControl,
@@ -16,7 +16,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { createProject } from '@/pages/other/entry/api';
+import { createProject } from '@/pages/entry/api';
 
 interface CreateTeamFormProps {
   onOk: () => void;
@@ -52,7 +52,7 @@ const CreateTeamForm = NiceModal.create<CreateTeamFormProps>(({ onOk }) => {
           <DialogTitle>create team</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className={'space-y-8'}>
+          <form onSubmit={form.handleSubmit(handleSubmit)}>
             <FormField
               control={form.control}
               name={'name'}

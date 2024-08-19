@@ -13,13 +13,12 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from 'lucide-react';
+import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -35,49 +34,15 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import styled from '@emotion/styled';
+import { Cross2Icon } from '@radix-ui/react-icons';
+import { ConfigList, getConfigList } from '@/pages/main/config/api';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useMount } from 'ahooks';
+import NiceModal from '@ebay/nice-modal-react';
+import CreateConfigForm from '@/pages/main/config/form/create-config-form';
 
-const data: Payment[] = [
-  {
-    id: 'm5gr84i9',
-    amount: 316,
-    status: 'success',
-    email: 'ken99@yahoo.com',
-  },
-  {
-    id: '3u1reuv4',
-    amount: 242,
-    status: 'success',
-    email: 'Abe45@gmail.com',
-  },
-  {
-    id: 'derv1ws0',
-    amount: 837,
-    status: 'processing',
-    email: 'Monserrat44@gmail.com',
-  },
-  {
-    id: '5kma53ae',
-    amount: 874,
-    status: 'success',
-    email: 'Silas22@gmail.com',
-  },
-  {
-    id: 'bhqecj4p',
-    amount: 721,
-    status: 'failed',
-    email: 'carmella@hotmail.com',
-  },
-];
-
-export type Payment = {
-  id: string;
-  amount: number;
-  status: 'pending' | 'processing' | 'success' | 'failed';
-  email: string;
-};
-
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<ConfigList>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -100,38 +65,35 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => <div className="capitalize">{row.getValue('status')}</div>,
-  },
-  {
-    accessorKey: 'email',
+    accessorKey: 'type',
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
-          Email
+          type
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue('email')}</div>,
   },
   {
-    accessorKey: 'amount',
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue('amount'));
-
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-      }).format(amount);
-
-      return <div className="text-right font-medium">{formatted}</div>;
+    accessorKey: 'name',
+    header: 'name',
+  },
+  {
+    accessorKey: 'created_at',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          created at
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
     },
   },
   {
@@ -149,13 +111,13 @@ export const columns: ColumnDef<Payment>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>actions</DropdownMenuLabel>
             <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>
-              Copy payment ID
+              copy config id
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>edit</DropdownMenuItem>
+            <DropdownMenuItem className={'text-red-600'}>delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -163,13 +125,25 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-function DataTableDemo() {
+function ConfigPage() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [data, setData] = useState<ConfigList[]>([]);
+  const projectId = useParams().id as string;
 
-  const table = useReactTable({
+  const load = () => {
+    getConfigList(projectId).then((res) => {
+      setData(res.data);
+    });
+  };
+
+  useMount(() => {
+    load();
+  });
+
+  const table = useReactTable<ConfigList>({
     data,
     columns,
     onSortingChange: setSorting,
@@ -190,39 +164,38 @@ function DataTableDemo() {
 
   return (
     <div className="w-full">
-      <div className="flex h-12 items-center p-2">
-        <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => table.getColumn('email')?.setFilterValue(event.target.value)}
-          className="max-w-sm"
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) => column.toggleVisibility(value)}
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                );
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+      <div className="flex h-14 items-center justify-between p-2">
+        <div className={'flex gap-2'}>
+          <Input
+            placeholder="search"
+            value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
+            onChange={(event) => table.getColumn('email')?.setFilterValue(event.target.value)}
+            className="max-w-sm h-10 w-[150px] lg:w-[250px]"
+          />
+          <Button
+            variant="ghost"
+            onClick={() => table.resetColumnFilters()}
+            className="h-10 px-2 lg:px-3"
+          >
+            Reset
+            <Cross2Icon className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+        <div>
+          <Button
+            onClick={() => {
+              // noinspection JSIgnoredPromiseFromCall
+              NiceModal.show(CreateConfigForm, {
+                projectId,
+                onOk: load,
+              });
+            }}
+          >
+            add
+          </Button>
+        </div>
       </div>
-      <div className="border-y h-[calc(100vh-6rem)]">
+      <div className="border-y h-[calc(100vh-7rem)]">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -260,7 +233,7 @@ function DataTableDemo() {
           </TableBody>
         </Table>
       </div>
-      <div className="flex h-12 items-center justify-end space-x-2 p-2">
+      <div className="flex h-14 items-center justify-end space-x-2 p-2">
         <div className="flex-1 text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length} of{' '}
           {table.getFilteredRowModel().rows.length} row(s) selected.
@@ -288,37 +261,4 @@ function DataTableDemo() {
   );
 }
 
-export default styled(DataTableDemo)`
-  & > div {
-    display: flex;
-    flex-direction: column;
-  }
-
-  th {
-    position: sticky;
-    top: 0;
-    z-index: 999999;
-  }
-
-  & > div > div {
-    margin: 0 !important;
-
-    &:first-of-type {
-      padding: 0 0.5rem;
-    }
-
-    &:first-of-type,
-    &:last-of-type {
-      display: flex;
-      height: 3rem;
-    }
-
-    &:nth-of-type(2) {
-      border-top: 1px solid hsl(var(--border));
-      border-bottom: 1px solid hsl(var(--border));
-      border-radius: 0;
-      height: calc(100vh - 6rem);
-      overflow-y: scroll;
-    }
-  }
-`;
+export default ConfigPage;

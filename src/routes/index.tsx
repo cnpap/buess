@@ -1,15 +1,15 @@
 import { Route, Routes } from 'react-router-dom';
 import AuthLayout from '@/pages/auth/auth-layout';
-import MainLayout from '@/components/layout/main-layout';
-import Index from '@/pages/other';
+import MainLayout from '@/pages/layout/main-layout';
+import Entry from '@/pages/entry/page';
 import MainHome from '@/pages/main/home';
-import ProjectList from '@/pages/other/entry/project-list';
+import ProjectList from '@/pages/entry/project-list';
 import ConfigPage from '@/pages/main/config/page';
 
 const RouteTemplate = () => {
   return (
     <Routes>
-      <Route path="/" element={<Index />} />
+      <Route path="/" element={<Entry />} />
       <Route path="/conn" element={<ProjectList />} />
       <Route path="/auth" element={<AuthLayout />} />
       <Route path="/:id/home" element={<MainHome />} />

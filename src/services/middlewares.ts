@@ -21,8 +21,7 @@ export async function signIned() {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
   } catch (e: Error) {
-    console.error(e);
-    await response(
+    return response(
       {
         code: 401,
         type: 'error',
@@ -30,6 +29,5 @@ export async function signIned() {
       },
       401,
     );
-    throw new Error('请重新登录');
   }
 }

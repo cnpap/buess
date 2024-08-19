@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import NiceModal from '@ebay/nice-modal-react';
 import Confirm from '@/components/confirm';
 import { Button } from '@/components/ui/button';
-import { deleteProject, ProjectMember } from '@/pages/other/entry/api';
+import { deleteProject, ProjectMember } from '@/pages/entry/api';
 
 type ProjectCardProps = {
   onClick?: () => void;

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { formSchema } from '@/pages/other/entry/create-project-form.zod';
+import { formSchema } from '@/pages/entry/create-project-form.zod';
 import { facade } from '@/utils/facade';
 import { signIned } from '@/services/middlewares';
 import { getPayload } from 'viteser/message';

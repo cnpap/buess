@@ -1,5 +1,5 @@
-import SideNav from '@/components/layout/side-nav';
-import { bottomMenus, topMenus } from '@/components/layout/_data';
+import SideNav from '@/pages/layout/side-nav';
+import { bottomMenus, topMenus } from '@/pages/layout/_data';
 
 export default function Side() {
   return (

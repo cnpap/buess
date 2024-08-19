@@ -43,6 +43,7 @@
     "@giphy/js-fetch-api": "^5.6.0",
     "@giphy/react-components": "^9.5.0",
     "@hookform/resolvers": "^3.6.0",
+    "@monaco-editor/react": "^4.6.0",
     "@nanostores/react": "^0.7.2",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -103,7 +104,7 @@
     "tsx": "^4.15.1",
     "vaul": "^0.9.1",
     "vite-plugin-inspect": "^0.8.4",
-    "viteser": "^0.0.1-beta.35",
+    "viteser": "^0.0.1-beta.36",
     "zod": "^3.23.8"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { Menu } from '@/components/layout/_data';
-import { cn } from '@/lib/utils';
+import { Menu } from '@/pages/layout/_data';
+import { cn } from '$lib/utils';
 import { $menusAtom } from '@/atoms/menu';
 import { useStore } from '@nanostores/react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -43,7 +43,7 @@ export default function SideNav({ data }: { data: Menu[] }) {
             to(`/${id}` + menu.path);
           }}
           className={cn(
-            'rounded-sm cursor-pointer flex active:bg-gray-100 dark:active:bg-slate-700 justify-center items-center outline-1 border border-transparent',
+            'rounded-sm cursor-pointer delay-75 duration-75 flex active:bg-gray-100 dark:active:bg-slate-700 justify-center items-center outline-1 border border-transparent',
             menusAtom?.path.startsWith(menu.path as string) &&
               'bg-white text-neutral-950 dark:bg-muted dark:text-white',
           )}

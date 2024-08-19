@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUpdateEffect } from 'ahooks';
 import { useAuth } from '@clerk/clerk-react';
 
-function Index() {
+function Entry() {
   const navigate = useNavigate();
   const auth = useAuth();
   useUpdateEffect(() => {
@@ -19,4 +19,4 @@ function Index() {
   return <div></div>;
 }
 
-export default Index;
+export default Entry;
